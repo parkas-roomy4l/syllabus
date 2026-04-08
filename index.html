@@ -25,7 +25,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .nav-tabs{display:flex;gap:4px;}
 .nav-tab{padding:6px 16px;font-size:12px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px solid transparent;border-radius:3px;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;}
 .nav-tab:hover{color:var(--text2);}
-.nav-tab.active{border-color:var(--border2);color:var(--accent);}
+  .nav-tab.active{border-color:var(--border2);color:var(--accent);}
+  .step-banner{max-width:900px;display:flex;gap:0;margin-bottom:28px;border:1px solid var(--border2);border-radius:6px;overflow:hidden;}
+  .step-item{flex:1;padding:14px 18px;background:var(--bg2);}
+  .step-item+.step-item{border-left:1px solid var(--border2);}
+  .step-item.active{background:var(--accent2);}
+  .step-num{font-size:10px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;}
+  .step-item.active .step-num{color:var(--accent);}
+  .step-title{font-size:14px;font-weight:500;color:var(--text2);}
+  .step-item.active .step-title{color:var(--text);}
+  .step-desc{font-size:11px;color:var(--text3);margin-top:3px;line-height:1.4;}
 
 /* ── PAGES ── */
 .page{display:none;padding:36px 28px 80px;}
@@ -158,13 +167,26 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="credit">by <a href="https://x.com/pourteaux" target="_blank">@pourteaux</a></div>
   </div>
   <div class="nav-tabs">
-    <button class="nav-tab active" onclick="showPage('setup')">⚙ Setup</button>
-    <button class="nav-tab" onclick="showPage('syllabus')">📖 Syllabus</button>
+    <button class="nav-tab active" onclick="showPage('setup')">① Build</button>
+    <button class="nav-tab" onclick="showPage('syllabus')">② Read</button>
   </div>
 </div>
 
 <!-- ══════════════ SETUP PAGE ══════════════ -->
 <div class="page active" id="page-setup">
+
+  <div class="step-banner">
+    <div class="step-item active">
+      <div class="step-num">Step 1</div>
+      <div class="step-title">Build your syllabus</div>
+      <div class="step-desc">Set your schedule, categories, and API key — then let Claude generate all the topics.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">Step 2</div>
+      <div class="step-title">Read & learn</div>
+      <div class="step-desc">Click any topic to generate a full lesson. Track your progress as you go.</div>
+    </div>
+  </div>
 
   <div class="setup-grid">
 
@@ -221,18 +243,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
   </div>
 
-  <!-- Topics -->
-  <div class="full-card" id="topicsSection">
-    <h2 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:500;margin-bottom:6px;">Topics</h2>
-    <p style="font-size:12px;color:var(--text3);margin-bottom:16px;">Fill in each topic cell. Click a week header to expand it.</p>
-    <div id="weekEditors"></div>
-  </div>
-
-  <div class="action-row">
-    <button class="primary-btn" onclick="applyAndView()">Save & View Syllabus →</button>
-    <button class="secondary-btn" onclick="loadDefault()">Load Example (6-Week Reading)</button>
+<div class="action-row">
+    <button class="primary-btn" id="genTopicsBtn" onclick="generateAllTopics()">✦ Generate Topics with Claude</button>
+    <button class="secondary-btn" onclick="applyAndView()">Go to Reading View →</button>
+    <button class="secondary-btn" onclick="loadDefault()">Load Example</button>
     <button class="secondary-btn" onclick="exportJSON()">Export JSON</button>
     <label class="secondary-btn" style="cursor:pointer;">Import JSON<input type="file" accept=".json" style="display:none" onchange="importJSON(event)"></label>
+  </div>
+  <div id="genProgress" style="display:none;max-width:900px;margin-top:16px;">
+    <div class="progress-label" style="margin-bottom:6px;"><span id="genProgressLabel">Generating…</span><span id="genProgressPct"></span></div>
+    <div class="progress-track"><div class="progress-fill" id="genProgressFill" style="width:0%"></div></div>
+    <div id="genLog" style="margin-top:10px;font-size:11px;color:var(--text3);line-height:1.8;max-height:120px;overflow-y:auto;"></div>
   </div>
 </div>
 
@@ -351,7 +372,6 @@ function renderSetup(){
   document.getElementById('lessonPrompt').value=config.prompt||DEFAULT_PROMPT;
   renderDaysRow();
   renderCatList();
-  renderWeekEditors();
 }
 
 function renderDaysRow(){
@@ -382,14 +402,14 @@ function addCat(){
   if(config.cats.length>=12)return;
   const hue=Math.floor(Math.random()*360);
   config.cats.push({label:'New category',color:`hsl(${hue},50%,60%)`});
-  // Add blank topic for each existing day slot
-  config.weeks.forEach(wk=>wk.forEach(day=>day.push('')));
+  // Append a blank string to every day in every week, preserving existing data
+  config.weeks.forEach(wk=>wk.forEach(day=>{ day.push(''); }));
   renderCatList();renderWeekEditors();saveConfig();
 }
 function delCat(i){
   if(config.cats.length<=1)return;
   config.cats.splice(i,1);
-  config.weeks.forEach(wk=>wk.forEach(day=>day.splice(i,1)));
+  config.weeks.forEach(wk=>wk.forEach(day=>{if(i<day.length)day.splice(i,1);}));
   renderCatList();renderWeekEditors();saveConfig();
 }
 function updateCatLabel(i,v){config.cats[i].label=v;saveConfig();}
@@ -465,16 +485,21 @@ function getWeekDatesSimple(wi){
 function renderWeekEditors(){
   const nDays=config.activeDays.length;
   const nCats=config.cats.length;
-  // ensure structure
+  // Ensure weeks array has right number of weeks
   while(config.weeks.length<config.numWeeks){
     const wk=[];for(let d=0;d<nDays;d++)wk.push(Array(nCats).fill(''));
     config.weeks.push(wk);
   }
   config.weeks=config.weeks.slice(0,config.numWeeks);
+  // Ensure each week has right number of days, and each day has right number of cats
+  // IMPORTANT: only pad/trim — never overwrite existing data
   config.weeks.forEach(wk=>{
     while(wk.length<nDays)wk.push(Array(nCats).fill(''));
     wk.splice(nDays);
-    wk.forEach(day=>{while(day.length<nCats)day.push('');day.splice(nCats);});
+    wk.forEach(day=>{
+      while(day.length<nCats)day.push('');
+      day.splice(nCats);
+    });
   });
 
   document.getElementById('weekEditors').innerHTML=config.weeks.map((wk,wi)=>{
@@ -549,6 +574,83 @@ function importJSON(e){
 }
 
 function esc(s){return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+
+async function generateAllTopics(){
+  const key=config.apiKey||document.getElementById('apiKey').value;
+  if(!key){alert('Please enter your Claude API key in the Setup panel first.');return;}
+  const title=document.getElementById('sylTitle').value||config.title||'Syllabus';
+  const cats=config.cats.map(c=>c.label);
+  const nWeeks=config.numWeeks;
+  const nDays=config.activeDays.length;
+  const total=nWeeks*nDays;
+  let done=0;
+
+  document.getElementById('genProgress').style.display='block';
+  document.getElementById('genTopicsBtn').disabled=true;
+  document.getElementById('genTopicsBtn').textContent='Generating…';
+  document.getElementById('genLog').innerHTML='';
+
+  // Ensure weeks structure exists
+  while(config.weeks.length<nWeeks){
+    const wk=[];for(let d=0;d<nDays;d++)wk.push(Array(cats.length).fill(''));
+    config.weeks.push(wk);
+  }
+  config.weeks=config.weeks.slice(0,nWeeks);
+  config.weeks.forEach(wk=>{
+    while(wk.length<nDays)wk.push(Array(cats.length).fill(''));
+    wk.forEach(day=>{while(day.length<cats.length)day.push('');});
+  });
+
+  for(let wi=0;wi<nWeeks;wi++){
+    const dates=getWeekDatesSimple(wi);
+    for(let di=0;di<nDays;di++){
+      const dayName=DAY_NAMES[config.activeDays[di]];
+      const dateStr=dates[di]||`Week ${wi+1} Day ${di+1}`;
+      const log=document.getElementById('genLog');
+      log.innerHTML+=`<div>⟳ Week ${wi+1}, ${dayName} ${dateStr}…</div>`;
+      log.scrollTop=log.scrollHeight;
+
+      const prompt=`You are designing a structured learning syllabus called "${title}".
+The syllabus has these categories: ${cats.join(', ')}.
+Generate exactly ${cats.length} topic titles for Week ${wi+1}, ${dayName} (${dateStr}).
+Each topic should be specific, educational, and appropriate for that category.
+Respond ONLY with a JSON array of exactly ${cats.length} strings, one per category in this exact order: ${cats.map((c,i)=>`[${i}] ${c}`).join(', ')}.
+No explanation, no markdown, just the raw JSON array.`;
+
+      try{
+        const res=await fetch('https://api.anthropic.com/v1/messages',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+          body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,messages:[{role:'user',content:prompt}]})
+        });
+        const data=await res.json();
+        if(data.error)throw new Error(data.error.message);
+        const raw=data.content.map(b=>b.text||'').join('').trim().replace(/```json|```/g,'').trim();
+        const topics=JSON.parse(raw);
+        if(Array.isArray(topics)){
+          topics.forEach((t,ci)=>{if(ci<cats.length)config.weeks[wi][di][ci]=t;});
+        }
+        log.lastElementChild.textContent=`✓ Week ${wi+1}, ${dayName} ${dateStr}`;
+      }catch(err){
+        log.lastElementChild.textContent=`✗ Week ${wi+1}, ${dayName} — ${err.message}`;
+      }
+
+      done++;
+      const pct=Math.round(done/total*100);
+      document.getElementById('genProgressLabel').textContent=`${done} of ${total} days generated`;
+      document.getElementById('genProgressPct').textContent=`${pct}%`;
+      document.getElementById('genProgressFill').style.width=pct+'%';
+
+      // Small delay to avoid rate limiting
+      await new Promise(r=>setTimeout(r,300));
+    }
+  }
+
+  saveConfig();
+  document.getElementById('genTopicsBtn').disabled=false;
+  document.getElementById('genTopicsBtn').textContent='✦ Regenerate Topics';
+  document.getElementById('genProgressLabel').textContent=`✓ All ${total} days generated — click "Go to Reading View" when ready`;
+}
 
 // ─────────────────────────────────────────
 // SYLLABUS VIEW
