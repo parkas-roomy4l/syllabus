@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syllabus Builder</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap');
+:root{
+  --bg:#0f0f0d;--bg2:#181815;--bg3:#1e1e1a;--bg4:#222220;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#e8e6de;--text2:#9e9b90;--text3:#5c5a53;
+  --accent:#c9a96e;--accent2:rgba(201,169,110,0.12);--red:#d47055;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* ── NAV ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid var(--border);background:var(--bg);}
+.topbar h1{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:var(--text);}
+.topbar h1 span{color:var(--accent);}
+.credit{font-size:11px;color:var(--text3);letter-spacing:0.03em;}
+.credit a{color:var(--text3);text-decoration:none;transition:color 0.2s;}
+.credit a:hover{color:var(--accent);}
+.nav-tabs{display:flex;gap:4px;}
+.nav-tab{padding:6px 16px;font-size:12px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px solid transparent;border-radius:3px;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;}
+.nav-tab:hover{color:var(--text2);}
+.nav-tab.active{border-color:var(--border2);color:var(--accent);}
+
+/* ── PAGES ── */
+.page{display:none;padding:36px 28px 80px;}
+.page.active{display:block;}
+
+/* ── SETUP PAGE ── */
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;}
+@media(max-width:700px){.setup-grid{grid-template-columns:1fr;}}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:24px;}
+.card h2{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;margin-bottom:4px;}
+.card p{font-size:12px;color:var(--text3);margin-bottom:18px;line-height:1.5;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:11px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.field input,.field textarea,.field select{width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color 0.2s;}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);}
+.field textarea{resize:vertical;min-height:80px;line-height:1.5;}
+.field input[type=password]{letter-spacing:0.05em;}
+.hint{font-size:11px;color:var(--text3);margin-top:5px;line-height:1.4;}
+
+.cat-list{display:flex;flex-direction:column;gap:8px;}
+.cat-row{display:flex;gap:8px;align-items:center;}
+.cat-row input[type=text]{flex:1;padding:7px 10px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;outline:none;}
+.cat-row input[type=text]:focus{border-color:var(--accent);}
+.cat-color{width:28px;height:28px;border-radius:4px;border:1px solid var(--border2);cursor:pointer;padding:2px;background:var(--bg3);}
+.cat-del{width:28px;height:28px;border:none;background:transparent;color:var(--text3);cursor:pointer;font-size:16px;border-radius:3px;display:flex;align-items:center;justify-content:center;}
+.cat-del:hover{color:var(--red);}
+.add-btn{margin-top:8px;padding:6px 14px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px dashed var(--border2);border-radius:3px;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;width:100%;}
+.add-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+.days-row{display:flex;gap:6px;flex-wrap:wrap;}
+.day-toggle{padding:6px 10px;font-size:11px;font-weight:500;border:1px solid var(--border2);border-radius:3px;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;}
+.day-toggle.on{background:var(--accent2);border-color:var(--accent);color:var(--accent);}
+
+.full-card{max-width:900px;margin-top:24px;}
+.week-setup{border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:12px;}
+.week-setup-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--bg3);cursor:pointer;}
+.week-setup-header span{font-size:13px;font-weight:500;}
+.week-setup-body{padding:16px;display:none;}
+.week-setup-body.open{display:block;}
+.topic-table{width:100%;border-collapse:collapse;}
+.topic-table th{font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--text3);padding:6px 8px;border-bottom:1px solid var(--border);text-align:left;}
+.topic-table td{padding:4px 4px;}
+.topic-table td input{width:100%;padding:5px 8px;background:var(--bg);border:1px solid var(--border);border-radius:3px;color:var(--text);font-size:11.5px;font-family:'DM Sans',sans-serif;outline:none;}
+.topic-table td input:focus{border-color:var(--accent);}
+
+.primary-btn{padding:10px 28px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;border:none;border-radius:4px;background:var(--accent);color:#0f0f0d;cursor:pointer;transition:opacity 0.2s;}
+.primary-btn:hover{opacity:0.85;}
+.secondary-btn{padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;border:1px solid var(--border2);border-radius:4px;background:transparent;color:var(--text2);cursor:pointer;transition:all 0.2s;}
+.secondary-btn:hover{border-color:var(--accent);color:var(--accent);}
+.action-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:24px;max-width:900px;}
+
+/* ── SYLLABUS PAGE ── */
+.syl-masthead{max-width:1200px;margin:0 auto 32px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;border-bottom:1px solid var(--border2);padding-bottom:24px;}
+.syl-masthead h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:500;color:var(--text);}
+.syl-masthead h2 span{color:var(--accent);}
+.syl-meta{font-size:12px;color:var(--text3);margin-top:6px;text-transform:uppercase;letter-spacing:0.04em;}
+.progress-bar-wrap{min-width:220px;}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:5px;}
+.progress-track{height:3px;background:var(--border2);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);}
+.legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.week-nav{max-width:1200px;margin:0 auto 8px;display:flex;gap:6px;flex-wrap:wrap;}
+.week-btn{padding:7px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px solid var(--border2);border-radius:3px;background:transparent;color:var(--text2);cursor:pointer;transition:all 0.2s;}
+.week-btn:hover{border-color:var(--accent);color:var(--accent);}
+.week-btn.active{background:var(--accent);border-color:var(--accent);color:#0f0f0d;}
+.week-meta{font-size:10px;display:block;margin-top:2px;text-transform:none;letter-spacing:0;color:var(--text3);}
+.week-btn.active .week-meta{color:rgba(15,15,13,0.55);}
+.week-actions{max-width:1200px;margin:0 auto 18px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.bulk-btn{padding:6px 14px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px solid var(--border2);border-radius:3px;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;}
+.bulk-btn:hover{border-color:var(--accent);color:var(--accent);}
+.bulk-btn.undo:hover{border-color:var(--red);color:var(--red);}
+.bulk-label{font-size:11px;color:var(--text3);}
+.grid{max-width:1200px;margin:0 auto;display:grid;gap:12px;}
+.day-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+.day-header{padding:10px 12px;border-bottom:1px solid var(--border);background:var(--bg3);display:flex;justify-content:space-between;align-items:flex-start;}
+.day-name{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;}
+.day-date{font-family:'Playfair Display',serif;font-size:15px;color:var(--text);margin-top:2px;}
+.day-count{font-size:10px;color:var(--text3);padding:2px 7px;border-radius:3px;border:1px solid var(--border2);cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.day-count:hover{border-color:var(--accent);color:var(--accent);}
+.day-count.all-done{border-color:var(--accent);color:var(--accent);}
+.topics{padding:4px 0 6px;}
+.topic-row{display:flex;align-items:flex-start;gap:8px;padding:7px 12px;cursor:pointer;transition:background 0.15s;-webkit-tap-highlight-color:transparent;}
+.topic-row:active{background:rgba(255,255,255,0.05);}
+.topic-row.done{opacity:0.38;}
+.topic-row.done .topic-text{text-decoration:line-through;text-decoration-color:var(--text3);}
+.cat-bar{flex-shrink:0;width:2px;min-height:26px;border-radius:2px;margin-top:3px;align-self:stretch;}
+.topic-inner{flex:1;min-width:0;}
+.topic-cat{font-size:9px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:2px;opacity:0.7;}
+.topic-text{font-size:11.5px;color:var(--text);line-height:1.45;word-break:break-word;}
+.done-pip{flex-shrink:0;width:13px;height:13px;margin-top:5px;opacity:0;transition:opacity 0.2s;}
+.topic-row.done .done-pip{opacity:1;}
+.divider{height:1px;background:var(--border);margin:0 12px;}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:200;align-items:flex-end;justify-content:center;}
+.modal-overlay.open{display:flex;}
+@media(min-width:600px){.modal-overlay{align-items:center;padding:24px;}}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px 16px 0 0;max-width:680px;width:100%;max-height:88vh;overflow-y:auto;padding:24px 22px 36px;display:flex;flex-direction:column;}
+@media(min-width:600px){.modal{border-radius:10px;padding:36px 40px;}}
+.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--border2);margin:0 auto 18px;}
+@media(min-width:600px){.modal-handle{display:none;}}
+.modal-cat{font-size:10px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:7px;}
+.modal-title{font-family:'Playfair Display',serif;font-size:19px;line-height:1.3;color:var(--text);margin-bottom:18px;}
+.modal-body{font-size:14px;line-height:1.75;color:var(--text2);flex:1;}
+.modal-body p{margin-bottom:1em;}
+.modal-loading{display:flex;align-items:center;gap:10px;color:var(--text3);font-size:13px;}
+.spinner{width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.modal-footer{margin-top:24px;display:flex;gap:10px;}
+.modal-mark-btn{flex:1;padding:11px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;border:1px solid var(--accent);border-radius:6px;background:transparent;color:var(--accent);cursor:pointer;transition:all 0.2s;}
+.modal-mark-btn:active{background:var(--accent);color:#0f0f0d;}
+.modal-mark-btn.is-done{background:var(--accent2);color:var(--text3);border-color:var(--border2);}
+.close-btn{padding:11px 18px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;border:1px solid var(--border2);border-radius:6px;background:transparent;color:var(--text2);cursor:pointer;}
+
+/* ── API KEY BANNER ── */
+.api-banner{max-width:1200px;margin:0 auto 20px;padding:12px 16px;background:var(--accent2);border:1px solid rgba(201,169,110,0.25);border-radius:6px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.api-banner span{font-size:12px;color:var(--accent);}
+.api-banner button{padding:5px 14px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px solid var(--accent);border-radius:3px;background:transparent;color:var(--accent);cursor:pointer;}
+
+@media(max-width:600px){.page{padding:20px 14px 80px;}.syl-masthead{flex-direction:column;align-items:flex-start;}.progress-bar-wrap{width:100%;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <h1>Syllabus <span>Builder</span></h1>
+    <div class="credit">by <a href="https://x.com/pourteaux" target="_blank">@pourteaux</a></div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('setup')">⚙ Setup</button>
+    <button class="nav-tab" onclick="showPage('syllabus')">📖 Syllabus</button>
+  </div>
+</div>
+
+<!-- ══════════════ SETUP PAGE ══════════════ -->
+<div class="page active" id="page-setup">
+
+  <div class="setup-grid">
+
+    <!-- API Key -->
+    <div class="card">
+      <h2>Claude API Key</h2>
+      <p>Used to generate lessons on demand. Never stored anywhere except your browser session.</p>
+      <div class="field">
+        <label>API Key</label>
+        <input type="password" id="apiKey" placeholder="sk-ant-…" oninput="saveConfig()">
+        <div class="hint">Get a key at <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent)">console.anthropic.com</a></div>
+      </div>
+    </div>
+
+    <!-- Syllabus basics -->
+    <div class="card">
+      <h2>Syllabus Info</h2>
+      <p>Name your syllabus and set the start date and schedule.</p>
+      <div class="field">
+        <label>Syllabus Title</label>
+        <input type="text" id="sylTitle" placeholder="6-Week Daily Reading Syllabus" oninput="saveConfig()">
+      </div>
+      <div class="field">
+        <label>Start Date</label>
+        <input type="date" id="startDate" oninput="onScheduleChange()">
+      </div>
+      <div class="field">
+        <label>Active Days</label>
+        <div class="days-row" id="daysRow"></div>
+      </div>
+      <div class="field">
+        <label>Number of Weeks</label>
+        <input type="number" id="numWeeks" min="1" max="52" value="6" oninput="onScheduleChange()">
+      </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="card">
+      <h2>Categories</h2>
+      <p>Define the subject categories for each day's rows. Add up to 12.</p>
+      <div class="cat-list" id="catList"></div>
+      <button class="add-btn" onclick="addCat()">+ Add category</button>
+    </div>
+
+    <!-- Lesson prompt -->
+    <div class="card">
+      <h2>Lesson Prompt</h2>
+      <p>Customize how Claude generates each lesson. Use <code style="color:var(--accent);font-size:11px">{topic}</code> and <code style="color:var(--accent);font-size:11px">{category}</code> as placeholders.</p>
+      <div class="field">
+        <label>System Prompt</label>
+        <textarea id="lessonPrompt" rows="7" oninput="saveConfig()"></textarea>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Topics -->
+  <div class="full-card" id="topicsSection">
+    <h2 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:500;margin-bottom:6px;">Topics</h2>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:16px;">Fill in each topic cell. Click a week header to expand it.</p>
+    <div id="weekEditors"></div>
+  </div>
+
+  <div class="action-row">
+    <button class="primary-btn" onclick="applyAndView()">Save & View Syllabus →</button>
+    <button class="secondary-btn" onclick="loadDefault()">Load Example (6-Week Reading)</button>
+    <button class="secondary-btn" onclick="exportJSON()">Export JSON</button>
+    <label class="secondary-btn" style="cursor:pointer;">Import JSON<input type="file" accept=".json" style="display:none" onchange="importJSON(event)"></label>
+  </div>
+</div>
+
+<!-- ══════════════ SYLLABUS PAGE ══════════════ -->
+<div class="page" id="page-syllabus">
+  <div id="apiBanner" style="display:none" class="api-banner">
+    <span>⚠ No API key set — lessons won't generate. Add your key in Setup.</span>
+    <button onclick="showPage('setup')">Go to Setup</button>
+  </div>
+  <div class="syl-masthead">
+    <div>
+      <h2 id="sylDisplayTitle">Daily Reading <span>Syllabus</span></h2>
+      <div class="syl-meta" id="sylDisplayMeta"></div>
+      <div class="legend" id="sylLegend"></div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-label"><span id="progressLabel">0 completed</span><span id="progressPct">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="week-nav" id="weekNav"></div>
+  <div class="week-actions" id="weekActions"></div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<!-- ══════════════ MODAL ══════════════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-cat" id="modalCat"></div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="modal-mark-btn" id="modalMarkBtn" onclick="toggleFromModal()">Mark complete</button>
+      <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────
+// DEFAULT DATA
+// ─────────────────────────────────────────
+const DEFAULT_CATS=[
+  {label:'Western canon',color:'#9b8fd4'},
+  {label:'Chinese language',color:'#4db892'},
+  {label:'STEM',color:'#5da8e0'},
+  {label:'History 1900–1990',color:'#d4a24d'},
+  {label:'Catholic theology',color:'#d46b9b'},
+  {label:'AI / tech',color:'#7db84d'},
+  {label:'Finance / investing',color:'#d47055'},
+  {label:'Culture / current',color:'#8a8880'},
+];
+const DEFAULT_DAYS=[1,2,3,4,5]; // Mon-Fri
+const DEFAULT_WEEKS_DATA=[
+  [['Homer – The Iliad (epic structure & oral tradition)','HSK II: Time expressions (今天 jīntiān, 明天 míngtiān, 昨天 zuótiān)','Astronomy – the cosmic distance ladder','WWI: causes & the alliance system (1914)','The Nicene Creed – origin & meaning','What is a neural network (perceptrons → layers)','Compound interest & time value of money','The global revival of vinyl records'],['Sophocles – Oedipus Rex (tragedy, fate, hubris)','HSK II: Measure words (个 gè, 本 běn, 张 zhāng)','Astronomy – stellar life cycles (main sequence → red giant)','WWI: trench warfare & the Western Front','The Sermon on the Mount – core beatitudes','Supervised vs unsupervised learning','Asset classes: equities, bonds, real estate, commodities','Rise of "third wave" coffee culture'],['Dante – Inferno (allegory, the journey structure)','HSK II: Directions & location (左 zuǒ, 右 yòu, 旁边 pángbiān)','Astronomy – black holes & event horizons','WWI: the American entry & Armistice (1917–18)','Original sin & the Fall – Augustinian doctrine','Gradient descent explained intuitively','Stock market basics: how equities are priced','Pickleball\'s mainstream explosion'],['Shakespeare – Hamlet (revenge tragedy, soliloquy form)','HSK II: Shopping vocabulary & prices','Physics – Newton\'s three laws of motion','The Paris Peace Conference & Treaty of Versailles','The seven sacraments – overview','Convolutional neural networks (CNNs) & image recognition','Bond markets: yield, duration, interest rate risk','The resurgence of board games & analog play'],['Shakespeare – Macbeth (ambition, power, the tragic flaw)','HSK II: Weather & seasons vocabulary','Physics – conservation of energy & momentum','The Russian Revolution (1917): causes & outcomes','Purgatory – theological basis & Dante\'s depiction','Recurrent networks & sequence modeling (LSTM basics)','Diversification & modern portfolio theory (Markowitz)','Global popularity of Korean skincare (K-beauty)']],
+  [['Cervantes – Don Quixote (the novel form, irony & idealism)','HSK II: Family members & relationships','Physics – electromagnetism & Maxwell\'s equations (conceptual)','The Roaring Twenties: prosperity, jazz & cultural change','The Lord\'s Prayer – theological exegesis','Transformers & the self-attention mechanism','Index funds vs active management (Bogle\'s case)','The creator economy & monetized content'],['Chaucer – Canterbury Tales (frame narrative, social satire)','HSK II: Food & ordering at a restaurant','Physics – special relativity: time dilation & E=mc²','The Great Depression: causes & global impact','Lectio Divina – the classical method of scriptural reading','Large language models: how GPT-style models are trained','Dollar-cost averaging & long-term investing behavior','Ambient & lo-fi music as a focus aid'],['Virgil – The Aeneid (Roman epic, pietas & empire)','HSK II: Health & body vocabulary','Chemistry – the periodic table & atomic structure','The New Deal: Roosevelt\'s response to depression','The Rosary – mysteries, origins & theology','Tokenization & embeddings explained','The 4% rule & retirement planning basics','Cottagecore & the rural aesthetic trend'],['Milton – Paradise Lost (theodicy, epic convention)','HSK II: Transportation vocabulary (地铁 dìtiě, 公共汽车 gōnggòng qìchē)','Chemistry – covalent & ionic bonding','The rise of fascism in Italy & Germany (1920s–30s)','The Communion of Saints – doctrine & practice','Hallucination in LLMs: why it happens & mitigations','Tax-advantaged accounts: 401(k), IRA, solo 401(k)','The explosion of true crime media'],['Tolstoy – Anna Karenina (realist novel, moral psychology)','HSK II: Telling time precisely (quarter past, half past)','Chemistry – chemical reactions & stoichiometry basics','Spanish Civil War (1936–39): ideology & international stakes','The Church Fathers: Augustine, Aquinas & Jerome','Retrieval-augmented generation (RAG) explained','Real estate as an asset class: REITs vs direct ownership','Longevity science & the anti-aging industry boom']],
+  [['Dostoevsky – Crime & Punishment (psychological realism)','HSK III: Expressing opinions (我认为 wǒ rènwéi, 觉得 juéde)','Biology – cell structure: prokaryotes vs eukaryotes','WWII: origins, blitzkrieg & the fall of France (1939–40)','Natural law theory – Aquinas & moral reasoning','Moore\'s Law & the history of transistor scaling','Understanding inflation & its effect on purchasing power','The global boom in running & endurance sports'],['Chekhov – short stories & the "Chekhov\'s gun" principle','HSK III: Comparison structures (比 bǐ, 没有 méiyǒu, 一样 yīyàng)','Biology – DNA structure & the central dogma','The Holocaust: architecture of genocide','The virtue ethics tradition – prudence, justice, fortitude, temperance','GPUs vs CPUs: why parallel processing drives AI','Understanding P/E ratios & equity valuation metrics','The prestige TV golden age – what made it possible'],['Ibsen – A Doll\'s House (realism in drama, social critique)','HSK III: Result complements (学会 xuéhuì, 听懂 tīngdǒng, 做完 zuòwán)','Biology – mitosis vs meiosis & genetic inheritance','Pearl Harbor & US entry into WWII (1941)','Theology of the body – John Paul II\'s foundational idea','NVIDIA\'s dominance: CUDA, GPU architecture & AI supply chain','Understanding net worth: assets, liabilities & balance sheets','The revival of craft cocktail culture'],['Kafka – The Metamorphosis (absurdism, alienation, modernity)','HSK III: Passive voice structure (被 bèi sentences)','Biology – photosynthesis & cellular respiration','The Pacific Theater: island-hopping & the atomic decision','The Magnificat & Marian theology','The semiconductor supply chain: TSMC, ASML & EUV lithography','Cash flow analysis: why cash flow beats income for investors','The democratization of luxury fashion (dupes, quiet luxury)'],['Flaubert – Madame Bovary (realism, free indirect discourse)','HSK III: Duration expressions (了 le for completed actions)','Biology – evolution & natural selection: Darwin\'s core argument','The Yalta Conference & post-war world order','The four marks of the Church: one, holy, catholic, apostolic','What is TSMC and why does it matter geopolitically','The psychology of loss aversion & behavioral finance','Sport climbing\'s rise from niche to Olympic']],
+  [['Austen – Pride & Prejudice (free indirect style, social comedy)','HSK III: Expressing probability (可能 kěnéng, 也许 yěxǔ, 应该 yīnggāi)','CS – binary, hexadecimal & how computers represent data','The Cold War begins: Truman Doctrine & Marshall Plan (1947)','Grace & free will – the Molinist debate','Reinforcement learning from human feedback (RLHF)','Options basics: calls, puts & why they exist','The mental health awareness movement & its cultural impact'],['Dickens – Great Expectations (Victorian novel, social mobility)','HSK III: Expressing purpose (为了 wèile + verb phrase)','CS – how the internet works: TCP/IP, HTTP, DNS','The Korean War & the limits of containment','The Eucharist – transubstantiation & Real Presence doctrine','The AI chip war: US export controls & China\'s response','Bitcoin as digital gold: the investment thesis (and critique)','The "third place" crisis & how it reshapes urban culture'],['Woolf – Mrs. Dalloway (stream of consciousness, modernism)','HSK III: Verb-complement structures (V得 de / V不 bù)','CS – algorithms: sorting, searching & Big O notation','McCarthyism & the Red Scare in American life','The problem of evil – theodicy in Catholic thought','Agentic AI: what AI agents are & why they matter now','Alternative investments: private equity, hedge funds, syndications','The solo travel movement'],['Joyce – "The Dead" from Dubliners (epiphany, Irish modernism)','HSK III: Making suggestions (要不 yào bu, 还是…吧 háishi…ba)','CS – how operating systems manage memory & processes','The Berlin Blockade & the creation of NATO (1949)','Subsidiarity & Catholic social teaching','Multimodal AI: vision, audio & cross-modal models','Understanding leverage: margin, debt & risk amplification','The global spread of ADHD diagnosis & stimulant culture'],['Eliot – Middlemarch (omniscient narration, moral seriousness)','HSK III: Complaining & giving feedback politely','Astronomy – the Big Bang & cosmic microwave background','The establishment of Israel & 1948 Arab-Israeli War','Prayer types in Catholic tradition: adoration, contrition, thanksgiving, supplication','What is a context window & why it matters','Sequence of returns risk & why it matters for retirees','Hot sauce & condiment culture\'s culinary revolution']],
+  [['Hemingway – The Sun Also Rises (iceberg theory, modernist prose)','HSK III: Expressing regret & wishes (要是…就好了 yàoshi…jiù hǎo le)','Physics – quantum mechanics: wave-particle duality','The Korean Armistice & the stabilization of Cold War (1953)','The Catechism structure: creed, sacraments, commandments, prayer','Diffusion models: how image generation actually works','Reading a 10-K: the basics of fundamental analysis','Sobriety culture: sober-curious & low-ABV movement'],['Fitzgerald – The Great Gatsby (the American Dream, symbolism)','HSK III: Describing trends (越来越 yuè lái yuè + adj)','Physics – thermodynamics: entropy & the laws','Decolonization in Africa & Asia (1950s–60s)','Divine Providence – how Catholics understand God\'s governance','Anthropic, OpenAI, Google DeepMind: who they are & how they differ','How to evaluate a real estate deal: cap rate, cash-on-cash return','The global influence of anime beyond Japan'],['Camus – The Stranger (existentialism vs absurdism)','HSK III: Describing personality (性格 xìnggé vocabulary)','Chemistry – acids, bases & pH: intuitive understanding','The Cuban Missile Crisis (1962): thirteen days explained','Sin, confession & the theology of reconciliation','Foundation models & the shift from task-specific to general AI','Gold, commodities & inflation hedges','The "new ugly" aesthetic in fashion & design'],['Orwell – 1984 (dystopia, political language, surveillance)','HSK III: Expressing change with 了 le at sentence end','Chemistry – organic chemistry: carbon chains & functional groups','The Vietnam War: American escalation & anti-war movement','Martyrdom & the theology of witness','AI safety: alignment, interpretability & the control problem','Preferred equity & hybrid securities (STRC-style instruments)','The marathon & mass participation running\'s growth'],['Achebe – Things Fall Apart (postcolonial novel, oral tradition)','HSK III: Hedging & softening statements (好像 hǎoxiàng, 似乎 sìhū)','Biology – the immune system: innate vs adaptive immunity','The Civil Rights Movement: Montgomery to the Voting Rights Act','Evangelization – the Great Commission in Catholic context','Energy consumption of AI: data centers & the power grid challenge','Net operating income, EBITDA & business valuation concepts','Craft beer\'s maturation & the explosion of IPAs']],
+  [['García Márquez – 100 Years of Solitude (magical realism)','HSK III: Expressing surprise (没想到 méi xiǎngdào, 原来 yuánlái)','CS – public key cryptography & how HTTPS works','1968: Prague Spring, Paris protests & MLK assassination','Eschatology: heaven, hell, purgatory & the last things','The economics of AI: inference cost, scaling laws & the path to AGI','Building a personal balance sheet & net worth tracker','Space tourism & the privatization of orbit'],['Beckett – Waiting for Godot (Theatre of the Absurd, existential drama)','HSK III: Formal written Chinese vs spoken (书面语 shūmiànyǔ basics)','CS – machine learning pipeline: data → features → model → deployment','Nixon, détente & the opening to China (1972)','The Holy Spirit: person, gifts & the theology of Pentecost','Open-source vs closed AI models: the strategic debate','Insurance as a financial tool: life, disability, umbrella','The renaissance of classical music among younger audiences'],['Borges – "The Garden of Forking Paths" (postmodern fiction, labyrinths)','HSK III: Four-character idioms (成语 chéngyǔ) – top 10 HSK-relevant','Physics – nuclear fission & fusion: energy & weapons','Watergate: constitutional crisis & the limits of executive power','Lectio Divina revisited: a full practice session framework','Robotics & embodied AI: why physical AI is the next frontier','Estate planning basics: wills, trusts, beneficiary designations','The global dominance of K-pop as cultural export'],['Woolf – A Room of One\'s Own (essay form, feminist literary criticism)','HSK III: Giving a short prepared speech (自我介绍 zìwǒ jièshào framework)','Biology – CRISPR & gene editing: mechanism & ethical stakes','The fall of the Berlin Wall & Soviet collapse (1989–91)','The Beatitudes as a complete moral framework','What comes after transformers: state space models, new architectures','How to read a brokerage statement & track portfolio performance','Ultra-processed food debate & the cultural politics of eating'],['Nabokov – "Good Readers and Good Writers" (essay on literary craft)','HSK III: Review – write 5 sentences using week\'s grammar in context','Astronomy – exoplanets & the search for life: Drake equation','Synthesis: the arc from 1914 to 1990 – what the century taught','Synthesis: how the Catholic intellectual tradition holds together','Synthesis: where AI stands in 2026 & what to watch next','Synthesis: building your personal financial philosophy','Synthesis: what the past 6 weeks of culture topics reveal about now']],
+];
+const DEFAULT_PROMPT=`You are a brilliant, concise educator. Write exactly 3 paragraphs (no headers, no bullet points, no markdown) on the following topic from a "{category}" curriculum: "{topic}". Each paragraph should be substantial and engaging — about 80–100 words. Write in a clear, intelligent voice suitable for a curious educated adult. Cover: (1) the core idea or context, (2) the key substance or detail, (3) why it matters or how it connects to the broader world. No preamble, no sign-off. Just the three paragraphs.`;
+const DAY_NAMES=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const DAY_SHORT=['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+// ─────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────
+let config={
+  apiKey:'',
+  title:'Daily Reading Syllabus',
+  startDate:'2026-04-01',
+  activeDays:[1,2,3,4,5],
+  numWeeks:6,
+  cats:JSON.parse(JSON.stringify(DEFAULT_CATS)),
+  weeks:JSON.parse(JSON.stringify(DEFAULT_WEEKS_DATA)),
+  prompt:DEFAULT_PROMPT,
+};
+let completed=new Set();
+let activeWeek=0;
+let currentModalKey=null;
+
+// ─────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────
+(async()=>{
+  try{
+    const cr=await window.storage.get('syllabus-config');
+    if(cr&&cr.value)config=JSON.parse(cr.value);
+    const pr=await window.storage.get('syllabus-completed');
+    if(pr&&pr.value)completed=new Set(JSON.parse(pr.value));
+  }catch(e){}
+  renderSetup();
+})();
+
+// ─────────────────────────────────────────
+// PAGES
+// ─────────────────────────────────────────
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t=>{if(t.textContent.toLowerCase().includes(id.slice(0,3)))t.classList.add('active');});
+  if(id==='syllabus'){buildSyllabus();}
+}
+
+// ─────────────────────────────────────────
+// SETUP RENDER
+// ─────────────────────────────────────────
+function renderSetup(){
+  document.getElementById('apiKey').value=config.apiKey||'';
+  document.getElementById('sylTitle').value=config.title||'';
+  document.getElementById('startDate').value=config.startDate||'';
+  document.getElementById('numWeeks').value=config.numWeeks||6;
+  document.getElementById('lessonPrompt').value=config.prompt||DEFAULT_PROMPT;
+  renderDaysRow();
+  renderCatList();
+  renderWeekEditors();
+}
+
+function renderDaysRow(){
+  const el=document.getElementById('daysRow');
+  el.innerHTML=DAY_SHORT.map((d,i)=>`<button class="day-toggle ${config.activeDays.includes(i)?'on':''}" onclick="toggleDay(${i})">${d}</button>`).join('');
+}
+
+function toggleDay(i){
+  const idx=config.activeDays.indexOf(i);
+  if(idx>-1){if(config.activeDays.length>1)config.activeDays.splice(idx,1);}
+  else config.activeDays.push(i);
+  config.activeDays.sort((a,b)=>a-b);
+  renderDaysRow();
+  renderWeekEditors();
+  saveConfig();
+}
+
+function renderCatList(){
+  document.getElementById('catList').innerHTML=config.cats.map((c,i)=>`
+    <div class="cat-row">
+      <input type="color" class="cat-color" value="${c.color}" onchange="updateCatColor(${i},this.value)">
+      <input type="text" value="${c.label}" placeholder="Category name" oninput="updateCatLabel(${i},this.value)">
+      <button class="cat-del" onclick="delCat(${i})">×</button>
+    </div>`).join('');
+}
+
+function addCat(){
+  if(config.cats.length>=12)return;
+  const hue=Math.floor(Math.random()*360);
+  config.cats.push({label:'New category',color:`hsl(${hue},50%,60%)`});
+  // Add blank topic for each existing day slot
+  config.weeks.forEach(wk=>wk.forEach(day=>day.push('')));
+  renderCatList();renderWeekEditors();saveConfig();
+}
+function delCat(i){
+  if(config.cats.length<=1)return;
+  config.cats.splice(i,1);
+  config.weeks.forEach(wk=>wk.forEach(day=>day.splice(i,1)));
+  renderCatList();renderWeekEditors();saveConfig();
+}
+function updateCatLabel(i,v){config.cats[i].label=v;saveConfig();}
+function updateCatColor(i,v){config.cats[i].color=v;saveConfig();}
+
+function onScheduleChange(){
+  config.startDate=document.getElementById('startDate').value;
+  config.numWeeks=parseInt(document.getElementById('numWeeks').value)||1;
+  // Resize weeks array
+  const nDays=config.activeDays.length;
+  while(config.weeks.length<config.numWeeks){
+    const wk=[];
+    for(let d=0;d<nDays;d++)wk.push(config.cats.map(()=>''));
+    config.weeks.push(wk);
+  }
+  config.weeks=config.weeks.slice(0,config.numWeeks);
+  // Ensure each week has right number of days
+  config.weeks.forEach(wk=>{
+    while(wk.length<nDays)wk.push(config.cats.map(()=>''));
+    wk.splice(nDays);
+  });
+  renderWeekEditors();saveConfig();
+}
+
+// Compute real calendar dates
+function getWeekDates(wi){
+  if(!config.startDate)return config.activeDays.map(d=>DAY_SHORT[d]);
+  const start=new Date(config.startDate+'T00:00:00');
+  // Count forward wi full cycles of activeDays
+  const dates=[];
+  let cursor=new Date(start);
+  let weeksFound=0;
+  // find the first active day on or after start
+  while(!config.activeDays.includes(cursor.getDay()))cursor.setDate(cursor.getDate()+1);
+  // now collect wi weeks
+  let weekStart=new Date(cursor);
+  for(let w=0;w<wi;w++){
+    // advance one full week cycle
+    let d=new Date(weekStart);
+    d.setDate(d.getDate()+1);
+    while(!config.activeDays.includes(d.getDay()))d.setDate(d.getDate()+1);
+    let prevDay=d.getDay();
+    while(true){
+      if(!config.activeDays.includes(d.getDay())){d.setDate(d.getDate()+1);continue;}
+      if(config.activeDays.indexOf(d.getDay())<=config.activeDays.indexOf(prevDay)&&w<wi-1){weekStart=new Date(d);break;}
+      if(config.activeDays.indexOf(d.getDay())===0&&config.activeDays.indexOf(prevDay)===config.activeDays.length-1){weekStart=new Date(d);break;}
+      prevDay=d.getDay();d.setDate(d.getDate()+1);
+      if(dates.length>100)break;
+    }
+  }
+  // Simpler: just offset by wi*7 days from weekStart pattern
+  // Actually let's just compute: start date, walk through activeDays week by week
+  return getWeekDatesSimple(wi);
+}
+
+function getWeekDatesSimple(wi){
+  if(!config.startDate||!config.activeDays.length)return config.activeDays.map(d=>DAY_SHORT[d]);
+  const base=new Date(config.startDate+'T00:00:00');
+  // Find first occurrence of activeDays[0] on or after base
+  let anchor=new Date(base);
+  while(!config.activeDays.includes(anchor.getDay()))anchor.setDate(anchor.getDate()+1);
+  // Anchor is day 0 of week 0. Week wi starts 7*wi days after anchor.
+  const weekStart=new Date(anchor);
+  weekStart.setDate(weekStart.getDate()+wi*7);
+  return config.activeDays.map(dayOfWeek=>{
+    const d=new Date(weekStart);
+    const diff=(dayOfWeek-anchor.getDay()+7)%7;
+    d.setDate(weekStart.getDate()+diff);
+    return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  });
+}
+
+function renderWeekEditors(){
+  const nDays=config.activeDays.length;
+  const nCats=config.cats.length;
+  // ensure structure
+  while(config.weeks.length<config.numWeeks){
+    const wk=[];for(let d=0;d<nDays;d++)wk.push(Array(nCats).fill(''));
+    config.weeks.push(wk);
+  }
+  config.weeks=config.weeks.slice(0,config.numWeeks);
+  config.weeks.forEach(wk=>{
+    while(wk.length<nDays)wk.push(Array(nCats).fill(''));
+    wk.splice(nDays);
+    wk.forEach(day=>{while(day.length<nCats)day.push('');day.splice(nCats);});
+  });
+
+  document.getElementById('weekEditors').innerHTML=config.weeks.map((wk,wi)=>{
+    const dates=getWeekDatesSimple(wi);
+    const header=dates.length?`${dates[0]} – ${dates[dates.length-1]}`:`Week ${wi+1}`;
+    const thCols=config.activeDays.map((d,di)=>`<th>${DAY_NAMES[d]}<br><span style="font-weight:300;color:var(--text3)">${dates[di]||''}</span></th>`).join('');
+    const rows=config.cats.map((cat,ci)=>`
+      <tr>
+        <td style="width:120px;padding:4px 8px;">
+          <span style="font-size:10px;color:${cat.color};font-weight:500;letter-spacing:0.04em;text-transform:uppercase;">${cat.label}</span>
+        </td>
+        ${config.activeDays.map((_,di)=>`<td><input type="text" value="${esc(wk[di]?wk[di][ci]||'':'')}" placeholder="Topic…" oninput="updateTopic(${wi},${di},${ci},this.value)"></td>`).join('')}
+      </tr>`).join('');
+    return `<div class="week-setup">
+      <div class="week-setup-header" onclick="toggleWeekEditor(${wi})">
+        <span>Week ${wi+1} &nbsp;·&nbsp; <span style="color:var(--text3);font-weight:400">${header}</span></span>
+        <span style="color:var(--text3);font-size:12px" id="we-arrow-${wi}">▸</span>
+      </div>
+      <div class="week-setup-body" id="we-body-${wi}">
+        <div style="overflow-x:auto">
+        <table class="topic-table">
+          <thead><tr><th>Category</th>${thCols}</tr></thead>
+          <tbody>${rows}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleWeekEditor(wi){
+  const body=document.getElementById('we-body-'+wi);
+  const arrow=document.getElementById('we-arrow-'+wi);
+  const open=body.classList.toggle('open');
+  arrow.textContent=open?'▾':'▸';
+}
+function updateTopic(wi,di,ci,val){
+  if(!config.weeks[wi])return;
+  if(!config.weeks[wi][di])return;
+  config.weeks[wi][di][ci]=val;
+  saveConfig();
+}
+
+function saveConfig(){
+  config.apiKey=document.getElementById('apiKey').value;
+  config.title=document.getElementById('sylTitle').value||'Syllabus';
+  config.prompt=document.getElementById('lessonPrompt').value||DEFAULT_PROMPT;
+  window.storage.set('syllabus-config',JSON.stringify(config)).catch(()=>{});
+}
+
+function applyAndView(){saveConfig();showPage('syllabus');}
+
+function loadDefault(){
+  config.cats=JSON.parse(JSON.stringify(DEFAULT_CATS));
+  config.weeks=JSON.parse(JSON.stringify(DEFAULT_WEEKS_DATA));
+  config.title='Daily Reading Syllabus';
+  config.startDate='2026-04-01';
+  config.activeDays=[1,2,3,4,5];
+  config.numWeeks=6;
+  config.prompt=DEFAULT_PROMPT;
+  renderSetup();saveConfig();
+}
+
+function exportJSON(){
+  const blob=new Blob([JSON.stringify(config,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='syllabus.json';a.click();
+}
+function importJSON(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{try{config=JSON.parse(ev.target.result);renderSetup();saveConfig();}catch(err){alert('Invalid JSON file.');}};
+  reader.readAsText(file);
+}
+
+function esc(s){return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+
+// ─────────────────────────────────────────
+// SYLLABUS VIEW
+// ─────────────────────────────────────────
+function totalTopics(){return config.numWeeks*config.activeDays.length*config.cats.length;}
+
+function buildSyllabus(){
+  // API banner
+  document.getElementById('apiBanner').style.display=config.apiKey?'none':'flex';
+  // Title
+  const titleEl=document.getElementById('sylDisplayTitle');
+  const words=config.title.split(' ');
+  const last=words.pop();
+  titleEl.innerHTML=words.join(' ')+' <span>'+last+'</span>';
+  // Meta
+  const dates0=getWeekDatesSimple(0);
+  const datesLast=getWeekDatesSimple(config.numWeeks-1);
+  document.getElementById('sylDisplayMeta').textContent=
+    `${dates0[0]||''} – ${datesLast[datesLast.length-1]||''} · ${DAY_NAMES[config.activeDays[0]]||''}–${DAY_NAMES[config.activeDays[config.activeDays.length-1]]||''} · ${config.cats.length} topics / day`;
+  // Legend
+  document.getElementById('sylLegend').innerHTML=config.cats.map(c=>
+    `<div class="legend-item"><div class="legend-dot" style="background:${c.color}"></div>${c.label}</div>`).join('');
+  // Grid cols
+  document.getElementById('grid').style.gridTemplateColumns=`repeat(${Math.min(config.activeDays.length,5)},1fr)`;
+  if(activeWeek>=config.numWeeks)activeWeek=0;
+  buildNav();buildWeekActions();buildGrid();updateProgress();
+}
+
+function topicKey(wi,di,ci){return `${wi}-${di}-${ci}`;}
+
+async function saveCompleted(){
+  try{await window.storage.set('syllabus-completed',JSON.stringify([...completed]));}catch(e){}
+}
+function updateProgress(){
+  const total=totalTopics();
+  const n=completed.size;
+  const pct=total?Math.round(n/total*100):0;
+  document.getElementById('progressLabel').textContent=`${n} of ${total} completed`;
+  document.getElementById('progressPct').textContent=`${pct}%`;
+  document.getElementById('progressFill').style.width=pct+'%';
+}
+
+function weekDoneCount(wi){
+  let n=0;
+  for(let di=0;di<config.activeDays.length;di++)
+    for(let ci=0;ci<config.cats.length;ci++)
+      if(completed.has(topicKey(wi,di,ci)))n++;
+  return n;
+}
+
+function buildNav(){
+  const total=config.activeDays.length*config.cats.length;
+  document.getElementById('weekNav').innerHTML=config.weeks.map((_,i)=>{
+    const wc=weekDoneCount(i);
+    const dates=getWeekDatesSimple(i);
+    return `<button class="week-btn ${i===activeWeek?'active':''}" onclick="setWeek(${i})">
+      Week ${i+1}<span class="week-meta">${dates[0]||''} – ${dates[dates.length-1]||''}${wc>0?' · '+wc+'/'+total:''}</span>
+    </button>`;
+  }).join('');
+}
+
+function buildWeekActions(){
+  const total=config.activeDays.length*config.cats.length;
+  const wc=weekDoneCount(activeWeek);
+  const allDone=wc===total*1;
+  document.getElementById('weekActions').innerHTML=`
+    <span class="bulk-label">Quick mark:</span>
+    <button class="bulk-btn" onclick="markWeek(${activeWeek},true)">${allDone?'✓ Week complete':'Mark week complete'}</button>
+    ${wc>0?`<button class="bulk-btn undo" onclick="markWeek(${activeWeek},false)">Clear week</button>`:''}`;
+}
+
+async function markWeek(wi,done){
+  for(let di=0;di<config.activeDays.length;di++)
+    for(let ci=0;ci<config.cats.length;ci++){
+      const k=topicKey(wi,di,ci);
+      done?completed.add(k):completed.delete(k);
+    }
+  await saveCompleted();
+  buildNav();buildWeekActions();buildGrid();updateProgress();
+}
+
+async function toggleDayComplete(wi,di){
+  const keys=config.cats.map((_,ci)=>topicKey(wi,di,ci));
+  const allDone=keys.every(k=>completed.has(k));
+  keys.forEach(k=>allDone?completed.delete(k):completed.add(k));
+  await saveCompleted();
+  buildNav();buildWeekActions();buildGrid();updateProgress();
+}
+
+function buildGrid(){
+  const week=config.weeks[activeWeek]||[];
+  const dates=getWeekDatesSimple(activeWeek);
+  document.getElementById('grid').innerHTML=config.activeDays.map((dayOfWeek,di)=>{
+    const day=week[di]||[];
+    const doneCnt=config.cats.filter((_,ci)=>completed.has(topicKey(activeWeek,di,ci))).length;
+    const allDone=doneCnt===config.cats.length;
+    const rows=config.cats.map((cat,ci)=>{
+      const key=topicKey(activeWeek,di,ci);
+      const isDone=completed.has(key);
+      const topic=day[ci]||'';
+      return `${ci>0?'<div class="divider"></div>':''}
+        <div class="topic-row${isDone?' done':''}" onclick="openLesson(${activeWeek},${di},${ci})">
+          <div class="cat-bar" style="background:${cat.color}"></div>
+          <div class="topic-inner">
+            <div class="topic-cat" style="color:${cat.color}">${cat.label}</div>
+            <div class="topic-text">${topic||'<em style="color:var(--text3)">No topic set</em>'}</div>
+          </div>
+          <svg class="done-pip" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="7" r="6.5" stroke="#c9a96e" stroke-width="1"/>
+            <polyline points="4,7 6.5,9.5 10,4.5" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>`;
+    }).join('');
+    return `<div class="day-card">
+      <div class="day-header">
+        <div>
+          <div class="day-name">${DAY_NAMES[dayOfWeek]}</div>
+          <div class="day-date">${dates[di]||''}</div>
+        </div>
+        <div class="day-count${allDone?' all-done':''}" onclick="event.stopPropagation();toggleDayComplete(${activeWeek},${di})" title="Toggle day">
+          ${allDone?'✓':doneCnt+'/'+config.cats.length}
+        </div>
+      </div>
+      <div class="topics">${rows}</div>
+    </div>`;
+  }).join('');
+}
+
+function setWeek(i){activeWeek=i;buildNav();buildWeekActions();buildGrid();}
+
+// ─────────────────────────────────────────
+// MODAL
+// ─────────────────────────────────────────
+function openLesson(wi,di,ci){
+  const cat=config.cats[ci];
+  const topic=(config.weeks[wi]&&config.weeks[wi][di])?config.weeks[wi][di][ci]||'':'';
+  const key=topicKey(wi,di,ci);
+  currentModalKey=key;
+  document.getElementById('modalCat').textContent=cat.label;
+  document.getElementById('modalCat').style.color=cat.color;
+  document.getElementById('modalTitle').textContent=topic||'(No topic)';
+  document.getElementById('modalBody').innerHTML='<div class="modal-loading"><div class="spinner"></div> Generating lesson…</div>';
+  document.getElementById('modalOverlay').classList.add('open');
+  syncModalBtn();
+  if(topic)generateLesson(topic,cat.label);
+  else document.getElementById('modalBody').innerHTML='<p style="color:var(--text3)">No topic set for this cell.</p>';
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');currentModalKey=null;}
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+function syncModalBtn(){
+  const btn=document.getElementById('modalMarkBtn');
+  if(!btn||!currentModalKey)return;
+  const isDone=completed.has(currentModalKey);
+  btn.textContent=isDone?'✓ Completed — mark incomplete':'Mark complete';
+  btn.className='modal-mark-btn'+(isDone?' is-done':'');
+}
+async function toggleFromModal(){
+  if(!currentModalKey)return;
+  completed.has(currentModalKey)?completed.delete(currentModalKey):completed.add(currentModalKey);
+  await saveCompleted();
+  syncModalBtn();buildNav();buildWeekActions();buildGrid();updateProgress();
+}
+
+async function generateLesson(topic,category){
+  const key=config.apiKey;
+  if(!key){
+    document.getElementById('modalBody').innerHTML='<p style="color:var(--text3)">No API key set. Go to Setup to add your Claude API key.</p>';
+    return;
+  }
+  const prompt=(config.prompt||DEFAULT_PROMPT).replace('{topic}',topic).replace('{category}',category);
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json();
+    if(data.error){document.getElementById('modalBody').innerHTML=`<p style="color:var(--red)">${data.error.message}</p>`;return;}
+    const text=data.content?.map(b=>b.text||'').join('')||'No response.';
+    const paras=text.trim().split(/\n\n+/).filter(p=>p.trim());
+    document.getElementById('modalBody').innerHTML=paras.map(p=>`<p>${p.trim()}</p>`).join('');
+  }catch(err){
+    document.getElementById('modalBody').innerHTML='<p style="color:var(--text3)">Failed to load lesson. Check your API key and try again.</p>';
+  }
+}
+</script>
+</body>
+</html>
