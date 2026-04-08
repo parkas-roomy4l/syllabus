@@ -245,7 +245,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 <div class="action-row">
     <button class="primary-btn" id="genTopicsBtn" onclick="generateAllTopics()">✦ Generate Topics with Claude</button>
-    <button class="secondary-btn" onclick="applyAndView()">Go to Reading View →</button>
+    <button class="secondary-btn" onclick="showPage('syllabus')">Go to Reading View →</button>
     <button class="secondary-btn" onclick="loadDefault()">Load Example</button>
     <button class="secondary-btn" onclick="exportJSON()">Export JSON</button>
     <label class="secondary-btn" style="cursor:pointer;">Import JSON<input type="file" accept=".json" style="display:none" onchange="importJSON(event)"></label>
@@ -544,22 +544,26 @@ function updateTopic(wi,di,ci,val){
 
 function saveConfig(){
   config.apiKey=document.getElementById('apiKey').value;
-  config.title=document.getElementById('sylTitle').value||'Syllabus';
-  config.prompt=document.getElementById('lessonPrompt').value||DEFAULT_PROMPT;
+  config.title=document.getElementById('sylTitle').value||config.title||'Syllabus';
+  config.prompt=document.getElementById('lessonPrompt').value||config.prompt||DEFAULT_PROMPT;
   window.storage.set('syllabus-config',JSON.stringify(config)).catch(()=>{});
 }
 
 function applyAndView(){saveConfig();showPage('syllabus');}
 
 function loadDefault(){
-  config.cats=JSON.parse(JSON.stringify(DEFAULT_CATS));
-  config.weeks=JSON.parse(JSON.stringify(DEFAULT_WEEKS_DATA));
-  config.title='Daily Reading Syllabus';
-  config.startDate='2026-04-01';
-  config.activeDays=[1,2,3,4,5];
-  config.numWeeks=6;
-  config.prompt=DEFAULT_PROMPT;
-  renderSetup();saveConfig();
+  config={
+    apiKey:document.getElementById('apiKey').value||'',
+    title:'Daily Reading Syllabus',
+    startDate:'2026-04-01',
+    activeDays:[1,2,3,4,5],
+    numWeeks:6,
+    cats:JSON.parse(JSON.stringify(DEFAULT_CATS)),
+    weeks:JSON.parse(JSON.stringify(DEFAULT_WEEKS_DATA)),
+    prompt:DEFAULT_PROMPT,
+  };
+  renderSetup();
+  saveConfig();
 }
 
 function exportJSON(){
