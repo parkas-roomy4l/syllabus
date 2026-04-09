@@ -366,10 +366,10 @@ let currentModalKey=null;
 
 (async()=>{
   try{
-    const cr=await window.storage.get('syllabus-config');
-    if(cr&&cr.value)config=JSON.parse(cr.value);
-    const pr=await window.storage.get('syllabus-completed');
-    if(pr&&pr.value)completed=new Set(JSON.parse(pr.value));
+    const cr=localStorage.getItem('syllabus-config');
+    if(cr)config=JSON.parse(cr);
+    const pr=localStorage.getItem('syllabus-completed');
+    if(pr)completed=new Set(JSON.parse(pr));
   }catch(e){}
   renderSetup();
 })();
@@ -464,7 +464,7 @@ function saveConfig(){
   if(keyEl&&keyEl.value)config.apiKey=keyEl.value;
   if(titleEl&&titleEl.value)config.title=titleEl.value;
   if(promptEl&&promptEl.value)config.prompt=promptEl.value;
-  window.storage.set('syllabus-config',JSON.stringify(config)).catch(()=>{});
+  try{localStorage.setItem('syllabus-config',JSON.stringify(config));}catch(e){}
 }
 
 function loadDefault(){
@@ -617,7 +617,7 @@ function buildSyllabus(){
 }
 
 function topicKey(wi,di,ci){return `${wi}-${di}-${ci}`;}
-async function saveCompleted(){try{await window.storage.set('syllabus-completed',JSON.stringify([...completed]));}catch(e){}}
+async function saveCompleted(){try{localStorage.setItem('syllabus-completed',JSON.stringify([...completed]));}catch(e){}}
 
 function updateProgress(){
   const total=totalTopics(),n=completed.size,pct=total?Math.round(n/total*100):0;
