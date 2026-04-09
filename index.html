@@ -15,107 +15,128 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
-/* ── NAV ── */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid var(--border);background:var(--bg);}
-.topbar h1{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:var(--text);}
-.topbar h1 span{color:var(--accent);}
-.credit{font-size:11px;color:var(--text3);letter-spacing:0.03em;}
-.credit a{color:var(--text3);text-decoration:none;transition:color 0.2s;}
+/* NAV */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--bg);}
+.topbar-left h1{font-family:'Playfair Display',serif;font-size:18px;font-weight:500;color:var(--text);}
+.topbar-left h1 span{color:var(--accent);}
+.credit{font-size:10px;color:var(--text3);}
+.credit a{color:var(--text3);text-decoration:none;}
 .credit a:hover{color:var(--accent);}
 .nav-tabs{display:flex;gap:4px;}
-.nav-tab{padding:6px 16px;font-size:12px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px solid transparent;border-radius:3px;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;}
+.nav-tab{padding:7px 14px;font-size:12px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px solid transparent;border-radius:3px;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;}
 .nav-tab:hover{color:var(--text2);}
-  .nav-tab.active{border-color:var(--border2);color:var(--accent);}
-  .step-banner{max-width:900px;display:flex;gap:0;margin-bottom:28px;border:1px solid var(--border2);border-radius:6px;overflow:hidden;}
-  .step-item{flex:1;padding:14px 18px;background:var(--bg2);}
-  .step-item+.step-item{border-left:1px solid var(--border2);}
-  .step-item.active{background:var(--accent2);}
-  .step-num{font-size:10px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;}
-  .step-item.active .step-num{color:var(--accent);}
-  .step-title{font-size:14px;font-weight:500;color:var(--text2);}
-  .step-item.active .step-title{color:var(--text);}
-  .step-desc{font-size:11px;color:var(--text3);margin-top:3px;line-height:1.4;}
+.nav-tab.active{border-color:var(--border2);color:var(--accent);}
 
-/* ── PAGES ── */
-.page{display:none;padding:36px 28px 80px;}
+/* PAGES */
+.page{display:none;padding:24px 20px 80px;}
 .page.active{display:block;}
 
-/* ── SETUP PAGE ── */
-.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;}
-@media(max-width:700px){.setup-grid{grid-template-columns:1fr;}}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:24px;}
-.card h2{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;margin-bottom:4px;}
-.card p{font-size:12px;color:var(--text3);margin-bottom:18px;line-height:1.5;}
-.field{margin-bottom:14px;}
-.field label{display:block;font-size:11px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
-.field input,.field textarea,.field select{width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color 0.2s;}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);}
-.field textarea{resize:vertical;min-height:80px;line-height:1.5;}
+/* STEP BANNER */
+.step-banner{display:flex;gap:0;margin-bottom:24px;border:1px solid var(--border2);border-radius:6px;overflow:hidden;}
+.step-item{flex:1;padding:12px 14px;background:var(--bg2);}
+.step-item+.step-item{border-left:1px solid var(--border2);}
+.step-item.active{background:var(--accent2);}
+.step-num{font-size:9px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:3px;}
+.step-item.active .step-num{color:var(--accent);}
+.step-title{font-size:13px;font-weight:500;color:var(--text2);}
+.step-item.active .step-title{color:var(--text);}
+.step-desc{font-size:11px;color:var(--text3);margin-top:2px;line-height:1.4;}
+@media(max-width:500px){.step-desc{display:none;}}
+
+/* SETUP */
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+@media(max-width:640px){.setup-grid{grid-template-columns:1fr;}}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px;}
+.card h2{font-family:'Playfair Display',serif;font-size:15px;font-weight:500;margin-bottom:3px;}
+.card p{font-size:11px;color:var(--text3);margin-bottom:14px;line-height:1.5;}
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--text3);margin-bottom:5px;}
+.field input,.field textarea,.field select{width:100%;padding:8px 11px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color 0.2s;}
+.field input:focus,.field textarea:focus{border-color:var(--accent);}
+.field textarea{resize:vertical;min-height:100px;line-height:1.5;}
 .field input[type=password]{letter-spacing:0.05em;}
-.hint{font-size:11px;color:var(--text3);margin-top:5px;line-height:1.4;}
-
-.cat-list{display:flex;flex-direction:column;gap:8px;}
-.cat-row{display:flex;gap:8px;align-items:center;}
-.cat-row input[type=text]{flex:1;padding:7px 10px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;outline:none;}
+.hint{font-size:11px;color:var(--text3);margin-top:4px;line-height:1.4;}
+.cat-list{display:flex;flex-direction:column;gap:7px;}
+.cat-row{display:flex;gap:7px;align-items:center;}
+.cat-row input[type=text]{flex:1;padding:6px 10px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;outline:none;}
 .cat-row input[type=text]:focus{border-color:var(--accent);}
-.cat-color{width:28px;height:28px;border-radius:4px;border:1px solid var(--border2);cursor:pointer;padding:2px;background:var(--bg3);}
-.cat-del{width:28px;height:28px;border:none;background:transparent;color:var(--text3);cursor:pointer;font-size:16px;border-radius:3px;display:flex;align-items:center;justify-content:center;}
+.cat-color{width:26px;height:26px;border-radius:4px;border:1px solid var(--border2);cursor:pointer;padding:2px;background:var(--bg3);}
+.cat-del{width:26px;height:26px;border:none;background:transparent;color:var(--text3);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
 .cat-del:hover{color:var(--red);}
-.add-btn{margin-top:8px;padding:6px 14px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px dashed var(--border2);border-radius:3px;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;width:100%;}
+.add-btn{margin-top:7px;padding:6px 14px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px dashed var(--border2);border-radius:3px;background:transparent;color:var(--text3);cursor:pointer;width:100%;}
 .add-btn:hover{border-color:var(--accent);color:var(--accent);}
-
-.days-row{display:flex;gap:6px;flex-wrap:wrap;}
-.day-toggle{padding:6px 10px;font-size:11px;font-weight:500;border:1px solid var(--border2);border-radius:3px;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;}
+.days-row{display:flex;gap:5px;flex-wrap:wrap;}
+.day-toggle{padding:5px 9px;font-size:11px;font-weight:500;border:1px solid var(--border2);border-radius:3px;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;}
 .day-toggle.on{background:var(--accent2);border-color:var(--accent);color:var(--accent);}
 
-.full-card{max-width:900px;margin-top:24px;}
-.week-setup{border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:12px;}
-.week-setup-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--bg3);cursor:pointer;}
-.week-setup-header span{font-size:13px;font-weight:500;}
-.week-setup-body{padding:16px;display:none;}
-.week-setup-body.open{display:block;}
-.topic-table{width:100%;border-collapse:collapse;}
-.topic-table th{font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--text3);padding:6px 8px;border-bottom:1px solid var(--border);text-align:left;}
-.topic-table td{padding:4px 4px;}
-.topic-table td input{width:100%;padding:5px 8px;background:var(--bg);border:1px solid var(--border);border-radius:3px;color:var(--text);font-size:11.5px;font-family:'DM Sans',sans-serif;outline:none;}
-.topic-table td input:focus{border-color:var(--accent);}
+/* ADVANCED SECTION */
+.advanced-toggle{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;cursor:pointer;margin-bottom:4px;user-select:none;}
+.advanced-toggle span{font-size:12px;font-weight:500;color:var(--text3);letter-spacing:0.03em;}
+.advanced-toggle .arrow{font-size:11px;color:var(--text3);transition:transform 0.2s;}
+.advanced-toggle.open .arrow{transform:rotate(90deg);}
+.advanced-body{display:none;margin-bottom:16px;}
+.advanced-body.open{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:640px){.advanced-body.open{grid-template-columns:1fr;}}
 
-.primary-btn{padding:10px 28px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;border:none;border-radius:4px;background:var(--accent);color:#0f0f0d;cursor:pointer;transition:opacity 0.2s;}
-.primary-btn:hover{opacity:0.85;}
-.secondary-btn{padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;border:1px solid var(--border2);border-radius:4px;background:transparent;color:var(--text2);cursor:pointer;transition:all 0.2s;}
+/* ACTION ROW */
+.action-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px;}
+.primary-btn{padding:11px 24px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;border:none;border-radius:4px;background:var(--accent);color:#0f0f0d;cursor:pointer;transition:opacity 0.2s;-webkit-tap-highlight-color:transparent;}
+.primary-btn:disabled{opacity:0.5;cursor:default;}
+.primary-btn:not(:disabled):hover{opacity:0.85;}
+.secondary-btn{padding:11px 18px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;border:1px solid var(--border2);border-radius:4px;background:transparent;color:var(--text2);cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
 .secondary-btn:hover{border-color:var(--accent);color:var(--accent);}
-.action-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:24px;max-width:900px;}
 
-/* ── SYLLABUS PAGE ── */
-.syl-masthead{max-width:1200px;margin:0 auto 32px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;border-bottom:1px solid var(--border2);padding-bottom:24px;}
-.syl-masthead h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:500;color:var(--text);}
-.syl-masthead h2 span{color:var(--accent);}
-.syl-meta{font-size:12px;color:var(--text3);margin-top:6px;text-transform:uppercase;letter-spacing:0.04em;}
-.progress-bar-wrap{min-width:220px;}
+/* GEN PROGRESS */
+.gen-progress{display:none;margin-top:16px;}
 .progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:5px;}
 .progress-track{height:3px;background:var(--border2);border-radius:2px;overflow:hidden;}
 .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s;}
-.legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;}
-.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);}
-.legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.week-nav{max-width:1200px;margin:0 auto 8px;display:flex;gap:6px;flex-wrap:wrap;}
-.week-btn{padding:7px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px solid var(--border2);border-radius:3px;background:transparent;color:var(--text2);cursor:pointer;transition:all 0.2s;}
+.gen-log{margin-top:10px;font-size:11px;color:var(--text3);line-height:1.9;max-height:130px;overflow-y:auto;}
+
+/* DONE POPUP */
+.done-popup-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:300;align-items:flex-end;justify-content:center;}
+.done-popup-overlay.open{display:flex;}
+@media(min-width:500px){.done-popup-overlay{align-items:center;}}
+.done-popup{background:var(--bg2);border:1px solid var(--border2);border-radius:16px 16px 0 0;max-width:480px;width:100%;padding:28px 24px 36px;text-align:center;}
+@media(min-width:500px){.done-popup{border-radius:12px;padding:36px 40px;}}
+.done-popup-icon{font-size:36px;margin-bottom:12px;}
+.done-popup h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;margin-bottom:8px;}
+.done-popup p{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:24px;}
+.done-popup-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+
+/* SYLLABUS PAGE */
+.syl-masthead{margin:0 auto 24px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--border2);padding-bottom:20px;}
+.syl-masthead h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;}
+.syl-masthead h2 span{color:var(--accent);}
+.syl-meta{font-size:11px;color:var(--text3);margin-top:5px;text-transform:uppercase;letter-spacing:0.04em;}
+.syl-right{display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
+.progress-bar-wrap{min-width:180px;}
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text2);}
+.legend-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.week-nav{margin:0 auto 8px;display:flex;gap:5px;flex-wrap:wrap;}
+.week-btn{padding:6px 13px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px solid var(--border2);border-radius:3px;background:transparent;color:var(--text2);cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
 .week-btn:hover{border-color:var(--accent);color:var(--accent);}
 .week-btn.active{background:var(--accent);border-color:var(--accent);color:#0f0f0d;}
-.week-meta{font-size:10px;display:block;margin-top:2px;text-transform:none;letter-spacing:0;color:var(--text3);}
+.week-meta{font-size:9px;display:block;margin-top:1px;text-transform:none;letter-spacing:0;color:var(--text3);}
 .week-btn.active .week-meta{color:rgba(15,15,13,0.55);}
-.week-actions{max-width:1200px;margin:0 auto 18px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-.bulk-btn{padding:6px 14px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px solid var(--border2);border-radius:3px;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;}
+.week-actions{margin:0 auto 14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.bulk-btn{padding:5px 12px;font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px solid var(--border2);border-radius:3px;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
 .bulk-btn:hover{border-color:var(--accent);color:var(--accent);}
 .bulk-btn.undo:hover{border-color:var(--red);color:var(--red);}
-.bulk-label{font-size:11px;color:var(--text3);}
-.grid{max-width:1200px;margin:0 auto;display:grid;gap:12px;}
-.day-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+.bulk-label{font-size:10px;color:var(--text3);}
+
+/* GRID – mobile: single column scroll */
+.grid-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;}
+.grid{display:flex;gap:10px;min-width:max-content;}
+.grid.single{min-width:unset;display:grid;grid-template-columns:1fr;}
+.day-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;width:260px;flex-shrink:0;}
+.grid.single .day-card{width:100%;}
 .day-header{padding:10px 12px;border-bottom:1px solid var(--border);background:var(--bg3);display:flex;justify-content:space-between;align-items:flex-start;}
 .day-name{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;}
-.day-date{font-family:'Playfair Display',serif;font-size:15px;color:var(--text);margin-top:2px;}
-.day-count{font-size:10px;color:var(--text3);padding:2px 7px;border-radius:3px;border:1px solid var(--border2);cursor:pointer;transition:all 0.2s;white-space:nowrap;}
-.day-count:hover{border-color:var(--accent);color:var(--accent);}
+.day-date{font-family:'Playfair Display',serif;font-size:14px;color:var(--text);margin-top:2px;}
+.day-count{font-size:10px;color:var(--text3);padding:2px 7px;border-radius:3px;border:1px solid var(--border2);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
+.day-count:hover,.day-count:active{border-color:var(--accent);color:var(--accent);}
 .day-count.all-done{border-color:var(--accent);color:var(--accent);}
 .topics{padding:4px 0 6px;}
 .topic-row{display:flex;align-items:flex-start;gap:8px;padding:7px 12px;cursor:pointer;transition:background 0.15s;-webkit-tap-highlight-color:transparent;}
@@ -129,40 +150,44 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .done-pip{flex-shrink:0;width:13px;height:13px;margin-top:5px;opacity:0;transition:opacity 0.2s;}
 .topic-row.done .done-pip{opacity:1;}
 .divider{height:1px;background:var(--border);margin:0 12px;}
+.api-banner{margin:0 auto 16px;padding:10px 14px;background:var(--accent2);border:1px solid rgba(201,169,110,0.25);border-radius:6px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.api-banner span{font-size:12px;color:var(--accent);}
+.api-banner button{padding:4px 12px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px solid var(--accent);border-radius:3px;background:transparent;color:var(--accent);cursor:pointer;}
 
-/* ── MODAL ── */
+/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:200;align-items:flex-end;justify-content:center;}
 .modal-overlay.open{display:flex;}
 @media(min-width:600px){.modal-overlay{align-items:center;padding:24px;}}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px 16px 0 0;max-width:680px;width:100%;max-height:88vh;overflow-y:auto;padding:24px 22px 36px;display:flex;flex-direction:column;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px 16px 0 0;max-width:680px;width:100%;max-height:88vh;overflow-y:auto;padding:22px 20px 36px;display:flex;flex-direction:column;}
 @media(min-width:600px){.modal{border-radius:10px;padding:36px 40px;}}
-.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--border2);margin:0 auto 18px;}
+.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--border2);margin:0 auto 16px;}
 @media(min-width:600px){.modal-handle{display:none;}}
-.modal-cat{font-size:10px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:7px;}
-.modal-title{font-family:'Playfair Display',serif;font-size:19px;line-height:1.3;color:var(--text);margin-bottom:18px;}
+.modal-cat{font-size:10px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;}
+.modal-title{font-family:'Playfair Display',serif;font-size:18px;line-height:1.3;color:var(--text);margin-bottom:16px;}
 .modal-body{font-size:14px;line-height:1.75;color:var(--text2);flex:1;}
 .modal-body p{margin-bottom:1em;}
 .modal-loading{display:flex;align-items:center;gap:10px;color:var(--text3);font-size:13px;}
 .spinner{width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.modal-footer{margin-top:24px;display:flex;gap:10px;}
-.modal-mark-btn{flex:1;padding:11px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;border:1px solid var(--accent);border-radius:6px;background:transparent;color:var(--accent);cursor:pointer;transition:all 0.2s;}
+.modal-footer{margin-top:22px;display:flex;gap:10px;}
+.modal-mark-btn{flex:1;padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;border:1px solid var(--accent);border-radius:6px;background:transparent;color:var(--accent);cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .modal-mark-btn:active{background:var(--accent);color:#0f0f0d;}
 .modal-mark-btn.is-done{background:var(--accent2);color:var(--text3);border-color:var(--border2);}
-.close-btn{padding:11px 18px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;border:1px solid var(--border2);border-radius:6px;background:transparent;color:var(--text2);cursor:pointer;}
+.close-btn{padding:11px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;border:1px solid var(--border2);border-radius:6px;background:transparent;color:var(--text2);cursor:pointer;-webkit-tap-highlight-color:transparent;}
 
-/* ── API KEY BANNER ── */
-.api-banner{max-width:1200px;margin:0 auto 20px;padding:12px 16px;background:var(--accent2);border:1px solid rgba(201,169,110,0.25);border-radius:6px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
-.api-banner span{font-size:12px;color:var(--accent);}
-.api-banner button{padding:5px 14px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;border:1px solid var(--accent);border-radius:3px;background:transparent;color:var(--accent);cursor:pointer;}
-
-@media(max-width:600px){.page{padding:20px 14px 80px;}.syl-masthead{flex-direction:column;align-items:flex-start;}.progress-bar-wrap{width:100%;}}
+@media(max-width:500px){
+  .page{padding:16px 14px 80px;}
+  .topbar{padding:12px 14px;}
+  .syl-masthead{flex-direction:column;align-items:flex-start;}
+  .syl-right{align-items:flex-start;width:100%;}
+  .progress-bar-wrap{width:100%;}
+}
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <div>
+  <div class="topbar-left">
     <h1>Syllabus <span>Builder</span></h1>
     <div class="credit">by <a href="https://x.com/pourteaux" target="_blank">@pourteaux</a></div>
   </div>
@@ -172,7 +197,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 </div>
 
-<!-- ══════════════ SETUP PAGE ══════════════ -->
+<!-- ══ BUILD PAGE ══ -->
 <div class="page active" id="page-setup">
 
   <div class="step-banner">
@@ -184,30 +209,26 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="step-item">
       <div class="step-num">Step 2</div>
       <div class="step-title">Read & learn</div>
-      <div class="step-desc">Click any topic to generate a full lesson. Track your progress as you go.</div>
+      <div class="step-desc">Tap any topic to generate a full lesson. Track your progress as you go.</div>
     </div>
   </div>
 
   <div class="setup-grid">
-
-    <!-- API Key -->
     <div class="card">
       <h2>Claude API Key</h2>
-      <p>Used to generate lessons on demand. Never stored anywhere except your browser session.</p>
+      <p>Used to generate topics and lessons. Never stored outside your browser.</p>
       <div class="field">
         <label>API Key</label>
         <input type="password" id="apiKey" placeholder="sk-ant-…" oninput="saveConfig()">
         <div class="hint">Get a key at <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent)">console.anthropic.com</a></div>
       </div>
     </div>
-
-    <!-- Syllabus basics -->
     <div class="card">
       <h2>Syllabus Info</h2>
-      <p>Name your syllabus and set the start date and schedule.</p>
+      <p>Name your syllabus and set the schedule.</p>
       <div class="field">
-        <label>Syllabus Title</label>
-        <input type="text" id="sylTitle" placeholder="6-Week Daily Reading Syllabus" oninput="saveConfig()">
+        <label>Title</label>
+        <input type="text" id="sylTitle" placeholder="My 6-Week Syllabus" oninput="saveConfig()">
       </div>
       <div class="field">
         <label>Start Date</label>
@@ -222,16 +243,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <input type="number" id="numWeeks" min="1" max="52" value="6" oninput="onScheduleChange()">
       </div>
     </div>
-
-    <!-- Categories -->
     <div class="card">
       <h2>Categories</h2>
-      <p>Define the subject categories for each day's rows. Add up to 12.</p>
+      <p>Define the subject rows for each day. Up to 12.</p>
       <div class="cat-list" id="catList"></div>
       <button class="add-btn" onclick="addCat()">+ Add category</button>
     </div>
+  </div>
 
-    <!-- Lesson prompt -->
+  <!-- ADVANCED -->
+  <div class="advanced-toggle" id="advToggle" onclick="toggleAdvanced()">
+    <span>Advanced settings</span>
+    <span class="arrow">▸</span>
+  </div>
+  <div class="advanced-body" id="advBody">
     <div class="card">
       <h2>Lesson Prompt</h2>
       <p>Customize how Claude generates each lesson. Use <code style="color:var(--accent);font-size:11px">{topic}</code> and <code style="color:var(--accent);font-size:11px">{category}</code> as placeholders.</p>
@@ -240,27 +265,32 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <textarea id="lessonPrompt" rows="7" oninput="saveConfig()"></textarea>
       </div>
     </div>
-
+    <div class="card">
+      <h2>Import / Export</h2>
+      <p>Save your syllabus as a JSON file or load one you've created before.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+        <button class="secondary-btn" style="width:100%" onclick="exportJSON()">Export JSON</button>
+        <label class="secondary-btn" style="cursor:pointer;width:100%;text-align:center;">Import JSON<input type="file" accept=".json" style="display:none" onchange="importJSON(event)"></label>
+        <button class="secondary-btn" style="width:100%" onclick="loadDefault()">Load Example Syllabus</button>
+      </div>
+    </div>
   </div>
 
-<div class="action-row">
+  <!-- ACTION -->
+  <div class="action-row">
     <button class="primary-btn" id="genTopicsBtn" onclick="generateAllTopics()">✦ Generate Topics with Claude</button>
-    <button class="secondary-btn" onclick="showPage('syllabus')">Go to Reading View →</button>
-    <button class="secondary-btn" onclick="loadDefault()">Load Example</button>
-    <button class="secondary-btn" onclick="exportJSON()">Export JSON</button>
-    <label class="secondary-btn" style="cursor:pointer;">Import JSON<input type="file" accept=".json" style="display:none" onchange="importJSON(event)"></label>
   </div>
-  <div id="genProgress" style="display:none;max-width:900px;margin-top:16px;">
-    <div class="progress-label" style="margin-bottom:6px;"><span id="genProgressLabel">Generating…</span><span id="genProgressPct"></span></div>
+  <div class="gen-progress" id="genProgress">
+    <div class="progress-label"><span id="genProgressLabel">Generating…</span><span id="genProgressPct"></span></div>
     <div class="progress-track"><div class="progress-fill" id="genProgressFill" style="width:0%"></div></div>
-    <div id="genLog" style="margin-top:10px;font-size:11px;color:var(--text3);line-height:1.8;max-height:120px;overflow-y:auto;"></div>
+    <div class="gen-log" id="genLog"></div>
   </div>
 </div>
 
-<!-- ══════════════ SYLLABUS PAGE ══════════════ -->
+<!-- ══ READ PAGE ══ -->
 <div class="page" id="page-syllabus">
   <div id="apiBanner" style="display:none" class="api-banner">
-    <span>⚠ No API key set — lessons won't generate. Add your key in Setup.</span>
+    <span>⚠ No API key — lessons won't generate.</span>
     <button onclick="showPage('setup')">Go to Setup</button>
   </div>
   <div class="syl-masthead">
@@ -269,17 +299,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="syl-meta" id="sylDisplayMeta"></div>
       <div class="legend" id="sylLegend"></div>
     </div>
-    <div class="progress-bar-wrap">
-      <div class="progress-label"><span id="progressLabel">0 completed</span><span id="progressPct">0%</span></div>
-      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="syl-right">
+      <div class="progress-bar-wrap">
+        <div class="progress-label"><span id="progressLabel">0 completed</span><span id="progressPct">0%</span></div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      </div>
     </div>
   </div>
   <div class="week-nav" id="weekNav"></div>
   <div class="week-actions" id="weekActions"></div>
-  <div class="grid" id="grid"></div>
+  <div class="grid-scroll"><div class="grid" id="grid"></div></div>
 </div>
 
-<!-- ══════════════ MODAL ══════════════ -->
+<!-- ══ MODAL ══ -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -293,21 +325,27 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 </div>
 
+<!-- ══ DONE POPUP ══ -->
+<div class="done-popup-overlay" id="donePopupOverlay">
+  <div class="done-popup">
+    <div class="done-popup-icon">✦</div>
+    <h3>Topics generated!</h3>
+    <p>All your syllabus topics are ready. Head to the reading view to start learning — tap any topic to generate a full lesson.</p>
+    <div class="done-popup-btns">
+      <button class="primary-btn" onclick="closeDonePopup();showPage('syllabus')">Go to Reading View →</button>
+      <button class="secondary-btn" onclick="closeDonePopup()">Stay here</button>
+    </div>
+  </div>
+</div>
+
 <script>
-// ─────────────────────────────────────────
-// DEFAULT DATA
-// ─────────────────────────────────────────
+// ── DEFAULT DATA ──
 const DEFAULT_CATS=[
-  {label:'Western canon',color:'#9b8fd4'},
-  {label:'Chinese language',color:'#4db892'},
-  {label:'STEM',color:'#5da8e0'},
-  {label:'History 1900–1990',color:'#d4a24d'},
-  {label:'Catholic theology',color:'#d46b9b'},
-  {label:'AI / tech',color:'#7db84d'},
-  {label:'Finance / investing',color:'#d47055'},
-  {label:'Culture / current',color:'#8a8880'},
+  {label:'Western canon',color:'#9b8fd4'},{label:'Chinese language',color:'#4db892'},
+  {label:'STEM',color:'#5da8e0'},{label:'History 1900–1990',color:'#d4a24d'},
+  {label:'Catholic theology',color:'#d46b9b'},{label:'AI / tech',color:'#7db84d'},
+  {label:'Finance / investing',color:'#d47055'},{label:'Culture / current',color:'#8a8880'},
 ];
-const DEFAULT_DAYS=[1,2,3,4,5]; // Mon-Fri
 const DEFAULT_WEEKS_DATA=[
   [['Homer – The Iliad (epic structure & oral tradition)','HSK II: Time expressions (今天 jīntiān, 明天 míngtiān, 昨天 zuótiān)','Astronomy – the cosmic distance ladder','WWI: causes & the alliance system (1914)','The Nicene Creed – origin & meaning','What is a neural network (perceptrons → layers)','Compound interest & time value of money','The global revival of vinyl records'],['Sophocles – Oedipus Rex (tragedy, fate, hubris)','HSK II: Measure words (个 gè, 本 běn, 张 zhāng)','Astronomy – stellar life cycles (main sequence → red giant)','WWI: trench warfare & the Western Front','The Sermon on the Mount – core beatitudes','Supervised vs unsupervised learning','Asset classes: equities, bonds, real estate, commodities','Rise of "third wave" coffee culture'],['Dante – Inferno (allegory, the journey structure)','HSK II: Directions & location (左 zuǒ, 右 yòu, 旁边 pángbiān)','Astronomy – black holes & event horizons','WWI: the American entry & Armistice (1917–18)','Original sin & the Fall – Augustinian doctrine','Gradient descent explained intuitively','Stock market basics: how equities are priced','Pickleball\'s mainstream explosion'],['Shakespeare – Hamlet (revenge tragedy, soliloquy form)','HSK II: Shopping vocabulary & prices','Physics – Newton\'s three laws of motion','The Paris Peace Conference & Treaty of Versailles','The seven sacraments – overview','Convolutional neural networks (CNNs) & image recognition','Bond markets: yield, duration, interest rate risk','The resurgence of board games & analog play'],['Shakespeare – Macbeth (ambition, power, the tragic flaw)','HSK II: Weather & seasons vocabulary','Physics – conservation of energy & momentum','The Russian Revolution (1917): causes & outcomes','Purgatory – theological basis & Dante\'s depiction','Recurrent networks & sequence modeling (LSTM basics)','Diversification & modern portfolio theory (Markowitz)','Global popularity of Korean skincare (K-beauty)']],
   [['Cervantes – Don Quixote (the novel form, irony & idealism)','HSK II: Family members & relationships','Physics – electromagnetism & Maxwell\'s equations (conceptual)','The Roaring Twenties: prosperity, jazz & cultural change','The Lord\'s Prayer – theological exegesis','Transformers & the self-attention mechanism','Index funds vs active management (Bogle\'s case)','The creator economy & monetized content'],['Chaucer – Canterbury Tales (frame narrative, social satire)','HSK II: Food & ordering at a restaurant','Physics – special relativity: time dilation & E=mc²','The Great Depression: causes & global impact','Lectio Divina – the classical method of scriptural reading','Large language models: how GPT-style models are trained','Dollar-cost averaging & long-term investing behavior','Ambient & lo-fi music as a focus aid'],['Virgil – The Aeneid (Roman epic, pietas & empire)','HSK II: Health & body vocabulary','Chemistry – the periodic table & atomic structure','The New Deal: Roosevelt\'s response to depression','The Rosary – mysteries, origins & theology','Tokenization & embeddings explained','The 4% rule & retirement planning basics','Cottagecore & the rural aesthetic trend'],['Milton – Paradise Lost (theodicy, epic convention)','HSK II: Transportation vocabulary (地铁 dìtiě, 公共汽车 gōnggòng qìchē)','Chemistry – covalent & ionic bonding','The rise of fascism in Italy & Germany (1920s–30s)','The Communion of Saints – doctrine & practice','Hallucination in LLMs: why it happens & mitigations','Tax-advantaged accounts: 401(k), IRA, solo 401(k)','The explosion of true crime media'],['Tolstoy – Anna Karenina (realist novel, moral psychology)','HSK II: Telling time precisely (quarter past, half past)','Chemistry – chemical reactions & stoichiometry basics','Spanish Civil War (1936–39): ideology & international stakes','The Church Fathers: Augustine, Aquinas & Jerome','Retrieval-augmented generation (RAG) explained','Real estate as an asset class: REITs vs direct ownership','Longevity science & the anti-aging industry boom']],
@@ -320,26 +358,12 @@ const DEFAULT_PROMPT=`You are a brilliant, concise educator. Write exactly 3 par
 const DAY_NAMES=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const DAY_SHORT=['Su','Mo','Tu','We','Th','Fr','Sa'];
 
-// ─────────────────────────────────────────
-// STATE
-// ─────────────────────────────────────────
-let config={
-  apiKey:'',
-  title:'Daily Reading Syllabus',
-  startDate:'2026-04-01',
-  activeDays:[1,2,3,4,5],
-  numWeeks:6,
-  cats:JSON.parse(JSON.stringify(DEFAULT_CATS)),
-  weeks:JSON.parse(JSON.stringify(DEFAULT_WEEKS_DATA)),
-  prompt:DEFAULT_PROMPT,
-};
+// ── STATE ──
+let config={apiKey:'',title:'Daily Reading Syllabus',startDate:'2026-04-01',activeDays:[1,2,3,4,5],numWeeks:6,cats:JSON.parse(JSON.stringify(DEFAULT_CATS)),weeks:JSON.parse(JSON.stringify(DEFAULT_WEEKS_DATA)),prompt:DEFAULT_PROMPT};
 let completed=new Set();
 let activeWeek=0;
 let currentModalKey=null;
 
-// ─────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────
 (async()=>{
   try{
     const cr=await window.storage.get('syllabus-config');
@@ -350,20 +374,24 @@ let currentModalKey=null;
   renderSetup();
 })();
 
-// ─────────────────────────────────────────
-// PAGES
-// ─────────────────────────────────────────
+// ── ADVANCED TOGGLE ──
+function toggleAdvanced(){
+  const toggle=document.getElementById('advToggle');
+  const body=document.getElementById('advBody');
+  toggle.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// ── PAGES ──
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.nav-tab').forEach(t=>{if(t.textContent.toLowerCase().includes(id.slice(0,3)))t.classList.add('active');});
-  if(id==='syllabus'){buildSyllabus();}
+  document.querySelectorAll('.nav-tab')[id==='setup'?0:1].classList.add('active');
+  if(id==='syllabus')buildSyllabus();
 }
 
-// ─────────────────────────────────────────
-// SETUP RENDER
-// ─────────────────────────────────────────
+// ── SETUP ──
 function renderSetup(){
   document.getElementById('apiKey').value=config.apiKey||'';
   document.getElementById('sylTitle').value=config.title||'';
@@ -375,8 +403,9 @@ function renderSetup(){
 }
 
 function renderDaysRow(){
-  const el=document.getElementById('daysRow');
-  el.innerHTML=DAY_SHORT.map((d,i)=>`<button class="day-toggle ${config.activeDays.includes(i)?'on':''}" onclick="toggleDay(${i})">${d}</button>`).join('');
+  document.getElementById('daysRow').innerHTML=DAY_SHORT.map((d,i)=>
+    `<button class="day-toggle ${config.activeDays.includes(i)?'on':''}" onclick="toggleDay(${i})">${d}</button>`
+  ).join('');
 }
 
 function toggleDay(i){
@@ -384,9 +413,7 @@ function toggleDay(i){
   if(idx>-1){if(config.activeDays.length>1)config.activeDays.splice(idx,1);}
   else config.activeDays.push(i);
   config.activeDays.sort((a,b)=>a-b);
-  renderDaysRow();
-  renderWeekEditors();
-  saveConfig();
+  renderDaysRow();saveConfig();
 }
 
 function renderCatList(){
@@ -402,15 +429,14 @@ function addCat(){
   if(config.cats.length>=12)return;
   const hue=Math.floor(Math.random()*360);
   config.cats.push({label:'New category',color:`hsl(${hue},50%,60%)`});
-  // Append a blank string to every day in every week, preserving existing data
-  config.weeks.forEach(wk=>wk.forEach(day=>{ day.push(''); }));
-  renderCatList();renderWeekEditors();saveConfig();
+  config.weeks.forEach(wk=>wk.forEach(day=>day.push('')));
+  renderCatList();saveConfig();
 }
 function delCat(i){
   if(config.cats.length<=1)return;
   config.cats.splice(i,1);
   config.weeks.forEach(wk=>wk.forEach(day=>{if(i<day.length)day.splice(i,1);}));
-  renderCatList();renderWeekEditors();saveConfig();
+  renderCatList();saveConfig();
 }
 function updateCatLabel(i,v){config.cats[i].label=v;saveConfig();}
 function updateCatColor(i,v){config.cats[i].color=v;saveConfig();}
@@ -418,127 +444,16 @@ function updateCatColor(i,v){config.cats[i].color=v;saveConfig();}
 function onScheduleChange(){
   config.startDate=document.getElementById('startDate').value;
   config.numWeeks=parseInt(document.getElementById('numWeeks').value)||1;
-  // Resize weeks array
   const nDays=config.activeDays.length;
   while(config.weeks.length<config.numWeeks){
-    const wk=[];
-    for(let d=0;d<nDays;d++)wk.push(config.cats.map(()=>''));
-    config.weeks.push(wk);
+    config.weeks.push(Array.from({length:nDays},()=>config.cats.map(()=>'')));
   }
   config.weeks=config.weeks.slice(0,config.numWeeks);
-  // Ensure each week has right number of days
   config.weeks.forEach(wk=>{
     while(wk.length<nDays)wk.push(config.cats.map(()=>''));
     wk.splice(nDays);
+    wk.forEach(day=>{while(day.length<config.cats.length)day.push('');day.splice(config.cats.length);});
   });
-  renderWeekEditors();saveConfig();
-}
-
-// Compute real calendar dates
-function getWeekDates(wi){
-  if(!config.startDate)return config.activeDays.map(d=>DAY_SHORT[d]);
-  const start=new Date(config.startDate+'T00:00:00');
-  // Count forward wi full cycles of activeDays
-  const dates=[];
-  let cursor=new Date(start);
-  let weeksFound=0;
-  // find the first active day on or after start
-  while(!config.activeDays.includes(cursor.getDay()))cursor.setDate(cursor.getDate()+1);
-  // now collect wi weeks
-  let weekStart=new Date(cursor);
-  for(let w=0;w<wi;w++){
-    // advance one full week cycle
-    let d=new Date(weekStart);
-    d.setDate(d.getDate()+1);
-    while(!config.activeDays.includes(d.getDay()))d.setDate(d.getDate()+1);
-    let prevDay=d.getDay();
-    while(true){
-      if(!config.activeDays.includes(d.getDay())){d.setDate(d.getDate()+1);continue;}
-      if(config.activeDays.indexOf(d.getDay())<=config.activeDays.indexOf(prevDay)&&w<wi-1){weekStart=new Date(d);break;}
-      if(config.activeDays.indexOf(d.getDay())===0&&config.activeDays.indexOf(prevDay)===config.activeDays.length-1){weekStart=new Date(d);break;}
-      prevDay=d.getDay();d.setDate(d.getDate()+1);
-      if(dates.length>100)break;
-    }
-  }
-  // Simpler: just offset by wi*7 days from weekStart pattern
-  // Actually let's just compute: start date, walk through activeDays week by week
-  return getWeekDatesSimple(wi);
-}
-
-function getWeekDatesSimple(wi){
-  if(!config.startDate||!config.activeDays.length)return config.activeDays.map(d=>DAY_SHORT[d]);
-  const base=new Date(config.startDate+'T00:00:00');
-  // Find first occurrence of activeDays[0] on or after base
-  let anchor=new Date(base);
-  while(!config.activeDays.includes(anchor.getDay()))anchor.setDate(anchor.getDate()+1);
-  // Anchor is day 0 of week 0. Week wi starts 7*wi days after anchor.
-  const weekStart=new Date(anchor);
-  weekStart.setDate(weekStart.getDate()+wi*7);
-  return config.activeDays.map(dayOfWeek=>{
-    const d=new Date(weekStart);
-    const diff=(dayOfWeek-anchor.getDay()+7)%7;
-    d.setDate(weekStart.getDate()+diff);
-    return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
-  });
-}
-
-function renderWeekEditors(){
-  const nDays=config.activeDays.length;
-  const nCats=config.cats.length;
-  // Ensure weeks array has right number of weeks
-  while(config.weeks.length<config.numWeeks){
-    const wk=[];for(let d=0;d<nDays;d++)wk.push(Array(nCats).fill(''));
-    config.weeks.push(wk);
-  }
-  config.weeks=config.weeks.slice(0,config.numWeeks);
-  // Ensure each week has right number of days, and each day has right number of cats
-  // IMPORTANT: only pad/trim — never overwrite existing data
-  config.weeks.forEach(wk=>{
-    while(wk.length<nDays)wk.push(Array(nCats).fill(''));
-    wk.splice(nDays);
-    wk.forEach(day=>{
-      while(day.length<nCats)day.push('');
-      day.splice(nCats);
-    });
-  });
-
-  document.getElementById('weekEditors').innerHTML=config.weeks.map((wk,wi)=>{
-    const dates=getWeekDatesSimple(wi);
-    const header=dates.length?`${dates[0]} – ${dates[dates.length-1]}`:`Week ${wi+1}`;
-    const thCols=config.activeDays.map((d,di)=>`<th>${DAY_NAMES[d]}<br><span style="font-weight:300;color:var(--text3)">${dates[di]||''}</span></th>`).join('');
-    const rows=config.cats.map((cat,ci)=>`
-      <tr>
-        <td style="width:120px;padding:4px 8px;">
-          <span style="font-size:10px;color:${cat.color};font-weight:500;letter-spacing:0.04em;text-transform:uppercase;">${cat.label}</span>
-        </td>
-        ${config.activeDays.map((_,di)=>`<td><input type="text" value="${esc(wk[di]?wk[di][ci]||'':'')}" placeholder="Topic…" oninput="updateTopic(${wi},${di},${ci},this.value)"></td>`).join('')}
-      </tr>`).join('');
-    return `<div class="week-setup">
-      <div class="week-setup-header" onclick="toggleWeekEditor(${wi})">
-        <span>Week ${wi+1} &nbsp;·&nbsp; <span style="color:var(--text3);font-weight:400">${header}</span></span>
-        <span style="color:var(--text3);font-size:12px" id="we-arrow-${wi}">▸</span>
-      </div>
-      <div class="week-setup-body" id="we-body-${wi}">
-        <div style="overflow-x:auto">
-        <table class="topic-table">
-          <thead><tr><th>Category</th>${thCols}</tr></thead>
-          <tbody>${rows}</tbody>
-        </table></div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function toggleWeekEditor(wi){
-  const body=document.getElementById('we-body-'+wi);
-  const arrow=document.getElementById('we-arrow-'+wi);
-  const open=body.classList.toggle('open');
-  arrow.textContent=open?'▾':'▸';
-}
-function updateTopic(wi,di,ci,val){
-  if(!config.weeks[wi])return;
-  if(!config.weeks[wi][di])return;
-  config.weeks[wi][di][ci]=val;
   saveConfig();
 }
 
@@ -549,21 +464,16 @@ function saveConfig(){
   window.storage.set('syllabus-config',JSON.stringify(config)).catch(()=>{});
 }
 
-function applyAndView(){saveConfig();showPage('syllabus');}
-
 function loadDefault(){
   config={
     apiKey:document.getElementById('apiKey').value||'',
-    title:'Daily Reading Syllabus',
-    startDate:'2026-04-01',
-    activeDays:[1,2,3,4,5],
-    numWeeks:6,
+    title:'Daily Reading Syllabus',startDate:'2026-04-01',
+    activeDays:[1,2,3,4,5],numWeeks:6,
     cats:JSON.parse(JSON.stringify(DEFAULT_CATS)),
     weeks:JSON.parse(JSON.stringify(DEFAULT_WEEKS_DATA)),
     prompt:DEFAULT_PROMPT,
   };
-  renderSetup();
-  saveConfig();
+  renderSetup();saveConfig();
 }
 
 function exportJSON(){
@@ -572,33 +482,42 @@ function exportJSON(){
 }
 function importJSON(e){
   const file=e.target.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=ev=>{try{config=JSON.parse(ev.target.result);renderSetup();saveConfig();}catch(err){alert('Invalid JSON file.');}};
-  reader.readAsText(file);
+  const r=new FileReader();
+  r.onload=ev=>{try{config=JSON.parse(ev.target.result);renderSetup();saveConfig();}catch(err){alert('Invalid JSON file.');}};
+  r.readAsText(file);
 }
 
 function esc(s){return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 
+// ── DONE POPUP ──
+function showDonePopup(){document.getElementById('donePopupOverlay').classList.add('open');}
+function closeDonePopup(){document.getElementById('donePopupOverlay').classList.remove('open');}
+document.getElementById('donePopupOverlay').addEventListener('click',function(e){if(e.target===this)closeDonePopup();});
+
+// ── GENERATE TOPICS ──
 async function generateAllTopics(){
-  const key=config.apiKey||document.getElementById('apiKey').value;
-  if(!key){alert('Please enter your Claude API key in the Setup panel first.');return;}
-  const title=document.getElementById('sylTitle').value||config.title||'Syllabus';
+  saveConfig();
+  const key=config.apiKey;
+  if(!key){alert('Please enter your Claude API key first.');return;}
   const cats=config.cats.map(c=>c.label);
   const nWeeks=config.numWeeks;
   const nDays=config.activeDays.length;
   const total=nWeeks*nDays;
   let done=0;
 
-  document.getElementById('genProgress').style.display='block';
-  document.getElementById('genTopicsBtn').disabled=true;
-  document.getElementById('genTopicsBtn').textContent='Generating…';
-  document.getElementById('genLog').innerHTML='';
+  const genProgress=document.getElementById('genProgress');
+  const genTopicsBtn=document.getElementById('genTopicsBtn');
+  const genProgressLabel=document.getElementById('genProgressLabel');
+  const genProgressPct=document.getElementById('genProgressPct');
+  const genProgressFill=document.getElementById('genProgressFill');
+  const genLog=document.getElementById('genLog');
 
-  // Ensure weeks structure exists
-  while(config.weeks.length<nWeeks){
-    const wk=[];for(let d=0;d<nDays;d++)wk.push(Array(cats.length).fill(''));
-    config.weeks.push(wk);
-  }
+  genProgress.style.display='block';
+  genTopicsBtn.disabled=true;
+  genTopicsBtn.textContent='Generating…';
+  genLog.innerHTML='';
+
+  while(config.weeks.length<nWeeks)config.weeks.push(Array.from({length:nDays},()=>Array(cats.length).fill('')));
   config.weeks=config.weeks.slice(0,nWeeks);
   config.weeks.forEach(wk=>{
     while(wk.length<nDays)wk.push(Array(cats.length).fill(''));
@@ -610,11 +529,12 @@ async function generateAllTopics(){
     for(let di=0;di<nDays;di++){
       const dayName=DAY_NAMES[config.activeDays[di]];
       const dateStr=dates[di]||`Week ${wi+1} Day ${di+1}`;
-      const log=document.getElementById('genLog');
-      log.innerHTML+=`<div>⟳ Week ${wi+1}, ${dayName} ${dateStr}…</div>`;
-      log.scrollTop=log.scrollHeight;
+      const logLine=document.createElement('div');
+      logLine.textContent=`⟳ Week ${wi+1}, ${dayName} ${dateStr}…`;
+      genLog.appendChild(logLine);
+      genLog.scrollTop=genLog.scrollHeight;
 
-      const prompt=`You are designing a structured learning syllabus called "${title}".
+      const prompt=`You are designing a structured learning syllabus called "${config.title}".
 The syllabus has these categories: ${cats.join(', ')}.
 Generate exactly ${cats.length} topic titles for Week ${wi+1}, ${dayName} (${dateStr}).
 Each topic should be specific, educational, and appropriate for that category.
@@ -625,73 +545,72 @@ No explanation, no markdown, just the raw JSON array.`;
         const res=await fetch('https://api.anthropic.com/v1/messages',{
           method:'POST',
           headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-          body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,messages:[{role:'user',content:prompt}]})
+          body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:prompt}]})
         });
         const data=await res.json();
         if(data.error)throw new Error(data.error.message);
         const raw=data.content.map(b=>b.text||'').join('').trim().replace(/```json|```/g,'').trim();
         const topics=JSON.parse(raw);
-        if(Array.isArray(topics)){
-          topics.forEach((t,ci)=>{if(ci<cats.length)config.weeks[wi][di][ci]=t;});
-        }
-        log.lastElementChild.textContent=`✓ Week ${wi+1}, ${dayName} ${dateStr}`;
+        if(Array.isArray(topics))topics.forEach((t,ci)=>{if(ci<cats.length)config.weeks[wi][di][ci]=t;});
+        logLine.textContent=`✓ Week ${wi+1}, ${dayName} ${dateStr}`;
       }catch(err){
-        log.lastElementChild.textContent=`✗ Week ${wi+1}, ${dayName} — ${err.message}`;
+        logLine.textContent=`✗ Week ${wi+1}, ${dayName} — ${err.message}`;
       }
 
       done++;
       const pct=Math.round(done/total*100);
-      document.getElementById('genProgressLabel').textContent=`${done} of ${total} days generated`;
-      document.getElementById('genProgressPct').textContent=`${pct}%`;
-      document.getElementById('genProgressFill').style.width=pct+'%';
-
-      // Small delay to avoid rate limiting
+      genProgressLabel.textContent=`${done} of ${total} days generated`;
+      genProgressPct.textContent=`${pct}%`;
+      genProgressFill.style.width=pct+'%';
       await new Promise(r=>setTimeout(r,300));
     }
   }
 
   saveConfig();
-  document.getElementById('genTopicsBtn').disabled=false;
-  document.getElementById('genTopicsBtn').textContent='✦ Regenerate Topics';
-  document.getElementById('genProgressLabel').textContent=`✓ All ${total} days generated — click "Go to Reading View" when ready`;
+  genTopicsBtn.disabled=false;
+  genTopicsBtn.textContent='✦ Regenerate Topics';
+  genProgressLabel.textContent=`✓ All ${total} days generated`;
+  showDonePopup();
 }
 
-// ─────────────────────────────────────────
-// SYLLABUS VIEW
-// ─────────────────────────────────────────
+// ── CALENDAR ──
+function getWeekDatesSimple(wi){
+  if(!config.startDate||!config.activeDays.length)return config.activeDays.map(d=>DAY_SHORT[d]);
+  const base=new Date(config.startDate+'T00:00:00');
+  let anchor=new Date(base);
+  while(!config.activeDays.includes(anchor.getDay()))anchor.setDate(anchor.getDate()+1);
+  const weekStart=new Date(anchor);
+  weekStart.setDate(weekStart.getDate()+wi*7);
+  return config.activeDays.map(dayOfWeek=>{
+    const d=new Date(weekStart);
+    const diff=(dayOfWeek-anchor.getDay()+7)%7;
+    d.setDate(weekStart.getDate()+diff);
+    return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  });
+}
+
+// ── SYLLABUS VIEW ──
 function totalTopics(){return config.numWeeks*config.activeDays.length*config.cats.length;}
 
 function buildSyllabus(){
-  // API banner
   document.getElementById('apiBanner').style.display=config.apiKey?'none':'flex';
-  // Title
-  const titleEl=document.getElementById('sylDisplayTitle');
   const words=config.title.split(' ');
   const last=words.pop();
-  titleEl.innerHTML=words.join(' ')+' <span>'+last+'</span>';
-  // Meta
-  const dates0=getWeekDatesSimple(0);
-  const datesLast=getWeekDatesSimple(config.numWeeks-1);
+  document.getElementById('sylDisplayTitle').innerHTML=words.join(' ')+' <span>'+last+'</span>';
+  const d0=getWeekDatesSimple(0),dL=getWeekDatesSimple(config.numWeeks-1);
   document.getElementById('sylDisplayMeta').textContent=
-    `${dates0[0]||''} – ${datesLast[datesLast.length-1]||''} · ${DAY_NAMES[config.activeDays[0]]||''}–${DAY_NAMES[config.activeDays[config.activeDays.length-1]]||''} · ${config.cats.length} topics / day`;
-  // Legend
+    `${d0[0]||''} – ${dL[dL.length-1]||''} · ${config.cats.length} topics / day`;
   document.getElementById('sylLegend').innerHTML=config.cats.map(c=>
     `<div class="legend-item"><div class="legend-dot" style="background:${c.color}"></div>${c.label}</div>`).join('');
-  // Grid cols
-  document.getElementById('grid').style.gridTemplateColumns=`repeat(${Math.min(config.activeDays.length,5)},1fr)`;
   if(activeWeek>=config.numWeeks)activeWeek=0;
   buildNav();buildWeekActions();buildGrid();updateProgress();
 }
 
 function topicKey(wi,di,ci){return `${wi}-${di}-${ci}`;}
+async function saveCompleted(){try{await window.storage.set('syllabus-completed',JSON.stringify([...completed]));}catch(e){}}
 
-async function saveCompleted(){
-  try{await window.storage.set('syllabus-completed',JSON.stringify([...completed]));}catch(e){}
-}
 function updateProgress(){
-  const total=totalTopics();
-  const n=completed.size;
-  const pct=total?Math.round(n/total*100):0;
+  const total=totalTopics(),n=completed.size,pct=total?Math.round(n/total*100):0;
   document.getElementById('progressLabel').textContent=`${n} of ${total} completed`;
   document.getElementById('progressPct').textContent=`${pct}%`;
   document.getElementById('progressFill').style.width=pct+'%';
@@ -708,8 +627,7 @@ function weekDoneCount(wi){
 function buildNav(){
   const total=config.activeDays.length*config.cats.length;
   document.getElementById('weekNav').innerHTML=config.weeks.map((_,i)=>{
-    const wc=weekDoneCount(i);
-    const dates=getWeekDatesSimple(i);
+    const wc=weekDoneCount(i),dates=getWeekDatesSimple(i);
     return `<button class="week-btn ${i===activeWeek?'active':''}" onclick="setWeek(${i})">
       Week ${i+1}<span class="week-meta">${dates[0]||''} – ${dates[dates.length-1]||''}${wc>0?' · '+wc+'/'+total:''}</span>
     </button>`;
@@ -718,8 +636,7 @@ function buildNav(){
 
 function buildWeekActions(){
   const total=config.activeDays.length*config.cats.length;
-  const wc=weekDoneCount(activeWeek);
-  const allDone=wc===total*1;
+  const wc=weekDoneCount(activeWeek),allDone=wc===total;
   document.getElementById('weekActions').innerHTML=`
     <span class="bulk-label">Quick mark:</span>
     <button class="bulk-btn" onclick="markWeek(${activeWeek},true)">${allDone?'✓ Week complete':'Mark week complete'}</button>
@@ -729,25 +646,27 @@ function buildWeekActions(){
 async function markWeek(wi,done){
   for(let di=0;di<config.activeDays.length;di++)
     for(let ci=0;ci<config.cats.length;ci++){
-      const k=topicKey(wi,di,ci);
-      done?completed.add(k):completed.delete(k);
+      const k=topicKey(wi,di,ci);done?completed.add(k):completed.delete(k);
     }
-  await saveCompleted();
-  buildNav();buildWeekActions();buildGrid();updateProgress();
+  await saveCompleted();buildNav();buildWeekActions();buildGrid();updateProgress();
 }
 
 async function toggleDayComplete(wi,di){
   const keys=config.cats.map((_,ci)=>topicKey(wi,di,ci));
   const allDone=keys.every(k=>completed.has(k));
   keys.forEach(k=>allDone?completed.delete(k):completed.add(k));
-  await saveCompleted();
-  buildNav();buildWeekActions();buildGrid();updateProgress();
+  await saveCompleted();buildNav();buildWeekActions();buildGrid();updateProgress();
 }
 
 function buildGrid(){
   const week=config.weeks[activeWeek]||[];
   const dates=getWeekDatesSimple(activeWeek);
-  document.getElementById('grid').innerHTML=config.activeDays.map((dayOfWeek,di)=>{
+  const nDays=config.activeDays.length;
+  const gridEl=document.getElementById('grid');
+  // Single column on mobile if only 1 day, otherwise scrollable row
+  gridEl.className=nDays===1?'grid single':'grid';
+
+  gridEl.innerHTML=config.activeDays.map((dayOfWeek,di)=>{
     const day=week[di]||[];
     const doneCnt=config.cats.filter((_,ci)=>completed.has(topicKey(activeWeek,di,ci))).length;
     const allDone=doneCnt===config.cats.length;
@@ -760,7 +679,7 @@ function buildGrid(){
           <div class="cat-bar" style="background:${cat.color}"></div>
           <div class="topic-inner">
             <div class="topic-cat" style="color:${cat.color}">${cat.label}</div>
-            <div class="topic-text">${topic||'<em style="color:var(--text3)">No topic set</em>'}</div>
+            <div class="topic-text">${topic||'<em style="color:var(--text3)">No topic</em>'}</div>
           </div>
           <svg class="done-pip" viewBox="0 0 14 14" fill="none">
             <circle cx="7" cy="7" r="6.5" stroke="#c9a96e" stroke-width="1"/>
@@ -774,7 +693,7 @@ function buildGrid(){
           <div class="day-name">${DAY_NAMES[dayOfWeek]}</div>
           <div class="day-date">${dates[di]||''}</div>
         </div>
-        <div class="day-count${allDone?' all-done':''}" onclick="event.stopPropagation();toggleDayComplete(${activeWeek},${di})" title="Toggle day">
+        <div class="day-count${allDone?' all-done':''}" onclick="event.stopPropagation();toggleDayComplete(${activeWeek},${di})">
           ${allDone?'✓':doneCnt+'/'+config.cats.length}
         </div>
       </div>
@@ -785,9 +704,7 @@ function buildGrid(){
 
 function setWeek(i){activeWeek=i;buildNav();buildWeekActions();buildGrid();}
 
-// ─────────────────────────────────────────
-// MODAL
-// ─────────────────────────────────────────
+// ── MODAL ──
 function openLesson(wi,di,ci){
   const cat=config.cats[ci];
   const topic=(config.weeks[wi]&&config.weeks[wi][di])?config.weeks[wi][di][ci]||'':'';
@@ -815,16 +732,12 @@ function syncModalBtn(){
 async function toggleFromModal(){
   if(!currentModalKey)return;
   completed.has(currentModalKey)?completed.delete(currentModalKey):completed.add(currentModalKey);
-  await saveCompleted();
-  syncModalBtn();buildNav();buildWeekActions();buildGrid();updateProgress();
+  await saveCompleted();syncModalBtn();buildNav();buildWeekActions();buildGrid();updateProgress();
 }
 
 async function generateLesson(topic,category){
   const key=config.apiKey;
-  if(!key){
-    document.getElementById('modalBody').innerHTML='<p style="color:var(--text3)">No API key set. Go to Setup to add your Claude API key.</p>';
-    return;
-  }
+  if(!key){document.getElementById('modalBody').innerHTML='<p style="color:var(--text3)">No API key set.</p>';return;}
   const prompt=(config.prompt||DEFAULT_PROMPT).replace('{topic}',topic).replace('{category}',category);
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{
@@ -838,7 +751,7 @@ async function generateLesson(topic,category){
     const paras=text.trim().split(/\n\n+/).filter(p=>p.trim());
     document.getElementById('modalBody').innerHTML=paras.map(p=>`<p>${p.trim()}</p>`).join('');
   }catch(err){
-    document.getElementById('modalBody').innerHTML='<p style="color:var(--text3)">Failed to load lesson. Check your API key and try again.</p>';
+    document.getElementById('modalBody').innerHTML='<p style="color:var(--text3)">Failed to load lesson. Check your API key.</p>';
   }
 }
 </script>
