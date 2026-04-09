@@ -458,9 +458,12 @@ function onScheduleChange(){
 }
 
 function saveConfig(){
-  config.apiKey=document.getElementById('apiKey').value;
-  config.title=document.getElementById('sylTitle').value||config.title||'Syllabus';
-  config.prompt=document.getElementById('lessonPrompt').value||config.prompt||DEFAULT_PROMPT;
+  const keyEl=document.getElementById('apiKey');
+  const titleEl=document.getElementById('sylTitle');
+  const promptEl=document.getElementById('lessonPrompt');
+  if(keyEl&&keyEl.value)config.apiKey=keyEl.value;
+  if(titleEl&&titleEl.value)config.title=titleEl.value;
+  if(promptEl&&promptEl.value)config.prompt=promptEl.value;
   window.storage.set('syllabus-config',JSON.stringify(config)).catch(()=>{});
 }
 
@@ -496,9 +499,16 @@ document.getElementById('donePopupOverlay').addEventListener('click',function(e)
 
 // ── GENERATE TOPICS ──
 async function generateAllTopics(){
+  // Read API key directly from input first, then save
+  const keyInput=document.getElementById('apiKey');
+  if(keyInput)config.apiKey=keyInput.value;
   saveConfig();
   const key=config.apiKey;
-  if(!key){alert('Please enter your Claude API key first.');return;}
+  if(!key){
+    alert('Please enter your Claude API key in the API Key field above.');
+    document.getElementById('apiKey').focus();
+    return;
+  }
   const cats=config.cats.map(c=>c.label);
   const nWeeks=config.numWeeks;
   const nDays=config.activeDays.length;
