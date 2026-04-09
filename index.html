@@ -534,6 +534,9 @@ async function generateAllTopics(){
     wk.forEach(day=>{while(day.length<cats.length)day.push('');});
   });
 
+  // Build a running log of all previously generated topics to avoid repetition
+  const usedTopics=[];
+
   for(let wi=0;wi<nWeeks;wi++){
     const dates=getWeekDatesSimple(wi);
     for(let di=0;di<nDays;di++){
@@ -544,12 +547,17 @@ async function generateAllTopics(){
       genLog.appendChild(logLine);
       genLog.scrollTop=genLog.scrollHeight;
 
+      const avoidSection=usedTopics.length>0
+        ? `\n\nIMPORTANT: Do NOT repeat or closely resemble any of these already-used topics:\n${usedTopics.slice(-60).join('\n')}`
+        : '';
+
       const prompt=`You are designing a structured learning syllabus called "${config.title}".
 The syllabus has these categories: ${cats.join(', ')}.
 Generate exactly ${cats.length} topic titles for Week ${wi+1}, ${dayName} (${dateStr}).
 Each topic should be specific, educational, and appropriate for that category.
+Topics across different days should be DISTINCT and VARIED — do not repeat subjects, examples, or concepts already used.
 Respond ONLY with a JSON array of exactly ${cats.length} strings, one per category in this exact order: ${cats.map((c,i)=>`[${i}] ${c}`).join(', ')}.
-No explanation, no markdown, just the raw JSON array.`;
+No explanation, no markdown, just the raw JSON array.${avoidSection}`;
 
       try{
         const res=await fetch('https://api.anthropic.com/v1/messages',{
@@ -561,7 +569,14 @@ No explanation, no markdown, just the raw JSON array.`;
         if(data.error)throw new Error(data.error.message);
         const raw=data.content.map(b=>b.text||'').join('').trim().replace(/```json|```/g,'').trim();
         const topics=JSON.parse(raw);
-        if(Array.isArray(topics))topics.forEach((t,ci)=>{if(ci<cats.length)config.weeks[wi][di][ci]=t;});
+        if(Array.isArray(topics)){
+          topics.forEach((t,ci)=>{
+            if(ci<cats.length){
+              config.weeks[wi][di][ci]=t;
+              usedTopics.push(`[${cats[ci]}] ${t}`);
+            }
+          });
+        }
         logLine.textContent=`✓ Week ${wi+1}, ${dayName} ${dateStr}`;
       }catch(err){
         logLine.textContent=`✗ Week ${wi+1}, ${dayName} — ${err.message}`;
